@@ -5,12 +5,14 @@ import { composeSize } from 'utils/ui';
 
 type ColorType = 'light' | 'dark';
 type SizeType = 'big' | 'regular' | 'small';
+type WeightType = 'bold' | 'bolder' | 'normal' | 'lighter'
 
 type Props = {
   tag?: keyof JSX.IntrinsicElements;
   className?: string;
-  color?: ColorType;
+  color?: ColorType | string;
   size?: SizeType | string;
+  weight?: WeightType;
   children: string;
 }
 
@@ -48,14 +50,16 @@ export const Text = ({
   className,
   size = 'regular',
   color = 'dark',
+  weight = 'normal',
   children
 }: Props) => {
   const styles = useMemo((): CSSProperties => {
     return {
       fontSize: getSize(size),
       color: getColor(color),
+      fontWeight: weight,
     }
-  }, [color, size]);
+  }, [color, size, weight]);
 
   return (
     <Tag className={className} style={styles}>{children}</Tag>

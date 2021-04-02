@@ -8,6 +8,7 @@ export const Header = () => {
     <header className='header'>
       <Text
         size='big'
+        weight='bold'
         className='header-title'>ASK</Text>
 
       <Text
