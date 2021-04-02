@@ -28,13 +28,15 @@ export const SelectServiceCard = ({
     <div
       className='selectServiceCard'
       onClick={movePage} >
-      <Text
-        className='selectServiceCard-title'
-        size='big'>{title}</Text>
-      <Text
-        className='selectServiceCard-subTitle'
-      >{subTitle}</Text>
-      <img src={image} alt="" />
+      <div className='selectServiceCard-contentWrapper'>
+        <Text
+          className='selectServiceCard-title'
+          size='big'>{title}</Text>
+        <Text
+          className='selectServiceCard-subTitle'
+        >{subTitle}</Text>
+        <img src={image} alt="" />
+      </div>
     </div>
   )
 }
