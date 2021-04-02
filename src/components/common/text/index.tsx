@@ -3,8 +3,6 @@ import { CSSProperties, useMemo } from 'react';
 import { colors } from 'styles/color';
 import { composeSize } from 'utils/ui';
 
-import './index.scss';
-
 type ColorType = 'light' | 'dark';
 type SizeType = 'big' | 'regular' | 'small';
 
