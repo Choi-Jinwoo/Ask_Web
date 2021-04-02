@@ -10,11 +10,11 @@ type Props = {
   tag?: keyof JSX.IntrinsicElements;
   className?: string;
   color?: ColorType;
-  size?: SizeType;
+  size?: SizeType | string;
   children: string;
 }
 
-const getColor = (colorType: ColorType): string => {
+const getColor = (colorType: ColorType | string): string => {
   switch (colorType) {
     case 'light':
       return colors.white;
@@ -22,11 +22,12 @@ const getColor = (colorType: ColorType): string => {
     case 'dark':
       return colors.darkBlue;
 
-    // no default
+    default:
+      return colorType;
   }
 }
 
-const getSize = (sizeType: SizeType): string => {
+const getSize = (sizeType: SizeType | string): string => {
   switch (sizeType) {
     case 'big':
       return composeSize(1.5, 'rem');
@@ -37,7 +38,8 @@ const getSize = (sizeType: SizeType): string => {
     case 'small':
       return composeSize(0.75, 'rem');
 
-    // no default
+    default:
+      return sizeType;
   }
 }
 
