@@ -1,6 +1,6 @@
 import React from 'react';
 import { CSSProperties, useMemo } from 'react';
-import { colors } from 'styles/color';
+import { colors } from 'styles/colors';
 import { composeSize } from 'utils/ui';
 
 type ColorType = 'light' | 'dark';
