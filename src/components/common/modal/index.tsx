@@ -43,7 +43,8 @@ export const Modal = ({
       style={styles}
       isOpen={isOpen} >
       <div className='modal-window-title'>
-        <Text>{title}</Text>
+        <Text
+          weight='bold'>{title}</Text>
         <IoMdClose
           className='modal-window-title-closeIcon'
           onClick={close} />

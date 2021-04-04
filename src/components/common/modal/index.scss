@@ -9,6 +9,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background-color: $lightestGray;
 
       &-closeIcon {
         font-size: 16px;
@@ -18,7 +19,7 @@
     }
 
     &-content {
-      padding: 10px 15px;
+      padding: 20px 15px;
     }
   }
 }
