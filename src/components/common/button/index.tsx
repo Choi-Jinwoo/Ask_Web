@@ -1,4 +1,5 @@
 import React, { CSSProperties, useMemo } from 'react';
+import { MouseEventHandler } from 'react';
 import { colors } from 'styles/colors';
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
   height?: string;
   fontSize?: string;
   fontColor?: string;
+  onClick?: MouseEventHandler;
 }
 
 export const Button = ({
@@ -17,6 +19,7 @@ export const Button = ({
   height = '30px',
   fontSize = '0.85rem',
   fontColor = colors.white,
+  onClick,
 }: Props) => {
   const styles = useMemo((): CSSProperties => {
     return {
@@ -28,11 +31,13 @@ export const Button = ({
       borderRadius: '3px',
       fontSize,
       cursor: 'pointer',
+      outline: 'none',
     }
   }, [color, fontColor, fontSize, height, width]);
 
   return (
     <button
+      onClick={onClick}
       style={styles}>
       {children}
     </button>
