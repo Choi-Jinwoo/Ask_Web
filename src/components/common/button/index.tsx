@@ -13,9 +13,9 @@ type Props = {
 export const Button = ({
   children,
   color = colors.darkBlue,
-  width = '85px',
-  height = '35px',
-  fontSize = '1rem',
+  width = '80px',
+  height = '30px',
+  fontSize = '0.85rem',
   fontColor = colors.white,
 }: Props) => {
   const styles = useMemo((): CSSProperties => {
