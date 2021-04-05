@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { MouseEventHandler } from 'react';
 import { Text } from 'components/common/text';
 
 import './index.scss';
@@ -8,26 +8,20 @@ type Props = {
   title: string;
   subTitle: string;
   image: string;
-  targetPath: string;
+  onClick?: MouseEventHandler;
 }
 
 export const SelectServiceCard = ({
   title,
   subTitle,
   image,
-  targetPath,
+  onClick
 }: Props) => {
-
-  const history = useHistory();
-
-  const movePage = useCallback(() => {
-    history.push(targetPath);
-  }, [history, targetPath]);
 
   return (
     <div
       className='selectServiceCard'
-      onClick={movePage} >
+      onClick={onClick} >
       <div className='selectServiceCard-contentWrapper'>
         <Text
           className='selectServiceCard-title'

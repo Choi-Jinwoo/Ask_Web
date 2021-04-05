@@ -16,14 +16,12 @@ export const Home = () => {
 
       <div className='home-cardWrapper'>
         <SelectServiceCard
-          targetPath='auditor'
           image={StudentIllustrator}
           title='수강자 서비스'
           subTitle='강의에 대해 질문해보세요!'
         />
 
         <SelectServiceCard
-          targetPath='lecture'
           image={TeacherIllustrator}
           title='강사 서비스'
           subTitle='수강자의 질문을 실시간으로 받아보세요!'
