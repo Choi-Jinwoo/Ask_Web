@@ -2,9 +2,9 @@ import socketIO from 'socket.io-client';
 import { SOCKET_ENDPOINT } from '../../config/endpoint';
 
 export class SocketSingleton {
-  private static _instance: SocketSingleton | null;
+  private static _instance: SocketSingleton;
 
-  private readonly socket;
+  readonly socket;
 
   private constructor() {
     this.socket = socketIO(SOCKET_ENDPOINT);
