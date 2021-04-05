@@ -7,7 +7,13 @@ import TeacherIllustrator from 'assets/teacher_illustrator.svg';
 
 import './index.scss';
 
-export const SelectService = () => {
+type Props = {
+  handleClickLecturerService: () => void;
+}
+
+export const SelectService = ({
+  handleClickLecturerService
+}: Props) => {
   return (
     <div className='selectService'>
       <Text
@@ -25,6 +31,7 @@ export const SelectService = () => {
           image={TeacherIllustrator}
           title='강사 서비스'
           subTitle='수강자의 질문을 실시간으로 받아보세요!'
+          onClick={handleClickLecturerService}
         />
       </div>
     </div>

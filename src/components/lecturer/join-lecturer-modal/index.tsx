@@ -5,12 +5,22 @@ import { Text } from 'components/common/text';
 import './index.scss';
 import { Button } from 'components/common/button';
 
-export const JoinLecturerModal = () => {
+type Props = {
+  isOpen: boolean;
+  handleClose: () => void;
+  handleConnect: () => void;
+}
+
+export const JoinLecturerModal = ({
+  isOpen,
+  handleClose,
+  handleConnect,
+}: Props) => {
   return (
     <Modal
       title='강사 페이지 접속'
-      isOpen={true}
-      close={() => { }}
+      isOpen={isOpen}
+      close={handleClose}
       width='400px'
       height='225px'
     >
@@ -20,7 +30,9 @@ export const JoinLecturerModal = () => {
         <input className='joinLecturerModal-code' type='password' />
 
         <div className='joinLecturerModal-buttonWrapper'>
-          <Button>접속</Button>
+          <Button
+            onClick={handleConnect}
+          >접속</Button>
         </div>
       </div>
     </Modal >
