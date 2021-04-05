@@ -1,11 +1,11 @@
 import React from 'react';
-import { Home } from 'components/home';
 import { PageTemplate } from 'components/common/page-template';
+import { SelectServiceContainer } from 'containers/select-service.container';
 
 export const HomePage = () => {
   return (
     <PageTemplate>
-      <Home />
+      <SelectServiceContainer />
     </PageTemplate >
   )
 }

@@ -7,14 +7,14 @@ import TeacherIllustrator from 'assets/teacher_illustrator.svg';
 
 import './index.scss';
 
-export const Home = () => {
+export const SelectService = () => {
   return (
-    <div className='home'>
+    <div className='selectService'>
       <Text
         size='2.25rem'
       >사용할 서비스를 선택하세요</Text>
 
-      <div className='home-cardWrapper'>
+      <div className='selectService-cardWrapper'>
         <SelectServiceCard
           image={StudentIllustrator}
           title='수강자 서비스'

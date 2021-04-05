@@ -2,8 +2,6 @@ import React, { MouseEventHandler } from 'react';
 import { Text } from 'components/common/text';
 
 import './index.scss';
-import { useHistory } from 'react-router';
-
 type Props = {
   title: string;
   subTitle: string;
