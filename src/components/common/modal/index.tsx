@@ -40,6 +40,7 @@ export const Modal = ({
 
   return (
     <ReactModal
+      ariaHideApp={false}
       style={styles}
       isOpen={isOpen} >
       <div className='modal-window-title'>

@@ -1,10 +1,14 @@
-import { SocketSingleton } from 'socket';
+import { InquirySocketSingleton } from 'socket/inquiry.socket';
 import { InquiryEvents } from './inquiry.event';
 
-export class InquiryEmitter {
+class InquiryEmitter {
+
   joinLecturer(adminCode: string) {
-    SocketSingleton.instance.socket.emit(InquiryEvents.JOIN_LECTURER_LECTURE, {
-      adminCode,
-    });
+    InquirySocketSingleton.instance.socket
+      .emit(InquiryEvents.JOIN_LECTURER_LECTURE, {
+        adminCode,
+      })
   }
 }
+
+export const inquiryEmitter = new InquiryEmitter();
