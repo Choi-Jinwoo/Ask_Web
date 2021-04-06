@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Modal } from 'components/common/modal';
 import { Text } from 'components/common/text';
 
@@ -6,25 +6,23 @@ import './index.scss';
 import { Button } from 'components/common/button';
 
 type Props = {
+  adminCode: string;
+  onAdminCodeChange: (e: any) => void;
   isOpen: boolean;
   handleClose: () => void;
-  handleJoin: (adminCode: string) => void;
+  handleJoin: () => void;
 }
 
 export const JoinLecturerModal = ({
+  adminCode,
+  onAdminCodeChange,
   isOpen,
   handleClose,
   handleJoin,
 }: Props) => {
-  const [adminCode, setAdminCode] = useState<string>('');
-
-  const onAdminCodeChange = useCallback((e) => {
-    setAdminCode(e.target.value);
-  }, [])
-
   const onJoinClick = useCallback((e) => {
-    handleJoin(adminCode);
-  }, [adminCode, handleJoin])
+    handleJoin();
+  }, [handleJoin])
 
   return (
     <Modal

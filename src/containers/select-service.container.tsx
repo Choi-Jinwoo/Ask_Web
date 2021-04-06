@@ -1,49 +1,41 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { SelectService } from 'components/select-service';
 import { JoinLecturerModal } from 'components/lecturer/join-lecturer-modal';
 import { inquiryEmitter } from 'socket/inquiry/inquiry.emitter';
-import { InquirySocketSingleton } from 'socket/inquiry.socket';
-import { InquiryEvents } from 'socket/inquiry/inquiry.event';
-import { ISocketResponse } from 'socket/base.response';
 import { useHistory } from 'react-router';
+import { adminCodeStorage } from 'storage/admin-code.storage';
+import { useInputText } from 'hooks/input.hook';
 
 export const SelectServiceContainer = () => {
   const history = useHistory();
+  const [adminCode, onAdminCodeChange, clearAdminCode] = useInputText();
 
   const [isJoinLecturerModalOpen, setJoinLecturerModalOpen]
     = useState<boolean>(false);
 
   const handleCloseJoinLecturerModal = useCallback(() => {
     setJoinLecturerModalOpen(false);
-  }, [])
+    clearAdminCode();
+  }, [clearAdminCode])
 
   const handleClickLecturerService = useCallback(() => {
     setJoinLecturerModalOpen(true);
   }, [])
 
-  const handleJoinLecturerService = useCallback((adminCode: string) => {
+  const handleJoinLecturerService = useCallback(() => {
     inquiryEmitter.joinLecturer(adminCode);
-  }, [])
+  }, [adminCode])
 
   const handleSuccessJoin = useCallback(() => {
+    adminCodeStorage.set(adminCode);
     history.push('/lecturer');
-  }, [history]);
-
-  useEffect(() => {
-    InquirySocketSingleton.instance.socket
-      .on(InquiryEvents.JOIN_LECTURER_LECTURE, (data: ISocketResponse) => {
-        const { status } = data;
-        if (status === 200) {
-          handleSuccessJoin();
-        } else if (status === 404) {
-          alert('관리자 번호가 옳지 않음');
-        }
-      });
-  }, [handleSuccessJoin]);
+  }, [adminCode, history]);
 
   return (
     <div>
       <JoinLecturerModal
+        adminCode={adminCode}
+        onAdminCodeChange={onAdminCodeChange}
         handleJoin={handleJoinLecturerService}
         isOpen={isJoinLecturerModalOpen}
         handleClose={handleCloseJoinLecturerModal} />
