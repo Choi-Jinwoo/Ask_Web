@@ -2,7 +2,7 @@ import { Text } from 'components/common/text';
 import { useMemo } from 'react';
 import { colors } from 'styles/colors';
 import { IInquiry } from 'types/inquiry.interface';
-import { convertRelativeTime } from 'utils/date/date.util';
+import { formatDate } from 'utils/date/date.util';
 
 import './index.scss';
 
@@ -15,8 +15,8 @@ export const InquiryItem = ({
 }: Props) => {
   const { content, user, createdAt } = inquiry;
 
-  const relativeCreatedAt = useMemo(() => {
-    return convertRelativeTime(createdAt);
+  const formattedDate = useMemo(() => {
+    return formatDate(createdAt);
   }, [createdAt]);
 
   return (
@@ -43,7 +43,7 @@ export const InquiryItem = ({
           <Text
             size='small'
             color={colors.darkerGray}
-          >{relativeCreatedAt}</Text>
+          >{formattedDate}</Text>
         </div>
       </div>
     </div>
