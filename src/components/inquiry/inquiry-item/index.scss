@@ -1,0 +1,34 @@
+.inquiryItem {
+  display: flex;
+  align-items: flex-start;
+  width: 80%;
+  margin: 40px 0;
+
+  &-profileImageWrapper {
+    margin-top: 5px;
+    object-fit: cover;
+  }
+
+  &-profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+  }
+
+  &-content {
+    margin-left: 10px;
+
+    &-profile {
+      display: flex;
+      align-items: center;
+
+      &-classroom {
+        margin-left: 5px;
+      }
+    }
+
+    &-time {
+      margin-top: 10px;
+    }
+  }
+}

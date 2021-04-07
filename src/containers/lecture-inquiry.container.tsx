@@ -1,3 +1,4 @@
+import { InquiryItem } from 'components/inquiry/inquiry-item';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
@@ -7,6 +8,12 @@ import { useStores } from 'stores/use-stores';
 export const LectureInquiryContainer = observer(() => {
   const { inquiryStore } = useStores();
   const history = useHistory();
+
+  const inquiryItems = inquiryStore.inquiries.map(() => {
+    return (
+      <InquiryItem />
+    )
+  });
 
   useEffect(() => {
     const adminCode = adminCodeStorage.get();
@@ -20,10 +27,9 @@ export const LectureInquiryContainer = observer(() => {
     inquiryStore.fetch(adminCode);
   }, [history, inquiryStore])
 
-  console.log(inquiryStore.inquiries);
-
   return (
     <div>
+      {inquiryItems}
     </div>
   );
 });
