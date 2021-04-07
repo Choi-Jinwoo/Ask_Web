@@ -19,6 +19,13 @@ class InquiryStore {
     this.page += 1;
     this.inquiries = this.inquiries.concat(inquiries);
   }
+
+  addInquiry(inquiry: IInquiry) {
+    this.inquiries = [
+      ...this.inquiries,
+      inquiry,
+    ];
+  }
 }
 
 export const inquiryStore = new InquiryStore(new InquiryRepository());

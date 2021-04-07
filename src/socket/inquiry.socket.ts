@@ -10,6 +10,7 @@ export class InquirySocketSingleton {
 
   private onLecturerJoin: Function | null = null;
   private onLecturerJoinError: Function | null = null;
+  private onReceiveInquiry: Function | null = null;
 
   setOnLecturerJoin(handler: Function) {
     this.onLecturerJoin = handler;
@@ -17,6 +18,10 @@ export class InquirySocketSingleton {
 
   setOnLecturerJoinError(handler: Function) {
     this.onLecturerJoinError = handler;
+  }
+
+  setOnReceiveInquiry(handler: Function) {
+    this.onReceiveInquiry = handler;
   }
 
   private constructor() {
@@ -35,6 +40,13 @@ export class InquirySocketSingleton {
           }
         } else if (this.onLecturerJoinError !== null) {
           this.onLecturerJoinError();
+        }
+      });
+
+    this.socket
+      .on(InquiryEvents.NEW_INQUIRY, (data: ISocketResponse) => {
+        if (this.onReceiveInquiry !== null) {
+          this.onReceiveInquiry(data);
         }
       });
   }

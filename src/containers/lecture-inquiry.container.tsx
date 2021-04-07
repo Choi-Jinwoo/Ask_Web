@@ -1,7 +1,9 @@
 import { InquiryItem } from 'components/inquiry/inquiry-item';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { InquirySocketSingleton } from 'socket/inquiry.socket';
+import { inquiryEmitter } from 'socket/inquiry/inquiry.emitter';
 import { adminCodeStorage } from 'storage/admin-code.storage';
 import { useStores } from 'stores/use-stores';
 
@@ -15,6 +17,19 @@ export const LectureInquiryContainer = observer(() => {
     )
   });
 
+  const handleScrollToBottom = useCallback(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight
+    })
+  }, [])
+
+  const handleReceiveInquiry = useCallback((data) => {
+    const { inquiry } = data.data;
+
+    inquiryStore.addInquiry(inquiry)
+    handleScrollToBottom();
+  }, [handleScrollToBottom, inquiryStore])
+
   useEffect(() => {
     const adminCode = adminCodeStorage.get();
 
@@ -24,8 +39,15 @@ export const LectureInquiryContainer = observer(() => {
       return;
     }
 
-    inquiryStore.fetch(adminCode);
-  }, [history, inquiryStore])
+    inquiryEmitter.joinLecturer(adminCode);
+
+    InquirySocketSingleton.instance.setOnReceiveInquiry(handleReceiveInquiry);
+
+    inquiryStore.fetch(adminCode)
+      .then(() => {
+        handleScrollToBottom();
+      })
+  }, [handleReceiveInquiry, handleScrollToBottom, history, inquiryStore])
 
   return (
     <div>
