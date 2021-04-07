@@ -1,9 +1,24 @@
 import { Text } from 'components/common/text';
+import { useMemo } from 'react';
 import { colors } from 'styles/colors';
+import { IInquiry } from 'types/inquiry.interface';
+import { convertRelativeTime } from 'utils/date/date.util';
 
 import './index.scss';
 
-export const InquiryItem = () => {
+type Props = {
+  inquiry: IInquiry,
+}
+
+export const InquiryItem = ({
+  inquiry
+}: Props) => {
+  const { content, user, createdAt } = inquiry;
+
+  const relativeCreatedAt = useMemo(() => {
+    return convertRelativeTime(createdAt);
+  }, [createdAt]);
+
   return (
     <div className='inquiryItem'>
       <div className='inquiryItem-profileImageWrapper'>
@@ -21,15 +36,14 @@ export const InquiryItem = () => {
         </div>
 
         <div className='inquiryItem-content-inquiry'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora maxime laudantium itaque consequuntur. Vero nobis asperiores ducimus porro vitae earum! Consectetur quibusdam in consequatur fuga obcaecati nihil, doloremque aperiam. Molestias.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora maxime laudantium itaque consequuntur. Vero nobis asperiores ducimus porro vitae earum! Consectetur quibusdam in consequatur fuga obcaecati nihil, doloremque aperiam. Molestias.
+          {content}
         </div>
 
         <div className='inquiryItem-content-time'>
           <Text
             size='small'
             color={colors.darkerGray}
-          >3분전</Text>
+          >{relativeCreatedAt}</Text>
         </div>
       </div>
     </div>

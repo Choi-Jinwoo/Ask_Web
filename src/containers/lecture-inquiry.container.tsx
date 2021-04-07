@@ -9,9 +9,9 @@ export const LectureInquiryContainer = observer(() => {
   const { inquiryStore } = useStores();
   const history = useHistory();
 
-  const inquiryItems = inquiryStore.inquiries.map(() => {
+  const inquiryItems = inquiryStore.inquiries.map((inquiry) => {
     return (
-      <InquiryItem />
+      <InquiryItem inquiry={inquiry} />
     )
   });
 
