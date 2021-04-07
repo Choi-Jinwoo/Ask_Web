@@ -25,9 +25,12 @@ export const LectureInquiryContainer = observer(() => {
 
   const handleReceiveInquiry = useCallback((data) => {
     const { inquiry } = data.data;
+    const shouldScrollToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
 
     inquiryStore.addInquiry(inquiry)
-    handleScrollToBottom();
+    if (shouldScrollToBottom) {
+      handleScrollToBottom();
+    }
   }, [handleScrollToBottom, inquiryStore])
 
   useEffect(() => {
