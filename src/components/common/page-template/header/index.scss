@@ -1,11 +1,14 @@
 @import "styles/colors.scss";
 
 .header {
+  position: fixed;
   display: flex;
   align-items: center;
   width: 100vw;
   height: 70px;
   border-bottom: 1px solid $lightGray;
+  background-color: white;
+  top: 0;
 
   &-title {
     margin-left: 20px;
