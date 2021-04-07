@@ -23,20 +23,20 @@ export const SelectServiceContainer = () => {
     setJoinLecturerModalOpen(true);
   }, [])
 
-  const handleSuccessJoin = useCallback(() => {
+  const handleSuccessLecturerJoin = useCallback(() => {
     adminCodeStorage.set(adminCode);
-    history.push('/lecturer');
+    history.push('/lecture');
   }, [adminCode, history]);
 
-  const handleFailJoin = useCallback(() => {
+  const handleFailLecturerJoin = useCallback(() => {
     alert('관리자 번호가 옳지 않습니다');
   }, []);
 
   const handleJoinLecturerService = useCallback(() => {
-    InquirySocketSingleton.instance.setOnLecturerJoin(handleSuccessJoin);
-    InquirySocketSingleton.instance.setOnLecturerJoinError(handleFailJoin);
+    InquirySocketSingleton.instance.setOnLecturerJoin(handleSuccessLecturerJoin);
+    InquirySocketSingleton.instance.setOnLecturerJoinError(handleFailLecturerJoin);
     inquiryEmitter.joinLecturer(adminCode);
-  }, [adminCode, handleFailJoin, handleSuccessJoin])
+  }, [adminCode, handleFailLecturerJoin, handleSuccessLecturerJoin])
 
   return (
     <div>

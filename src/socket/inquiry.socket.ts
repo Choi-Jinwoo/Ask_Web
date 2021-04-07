@@ -27,9 +27,8 @@ export class InquirySocketSingleton {
     this.socket = socket;
 
     this.socket
-      .on(InquiryEvents.JOIN_LECTURER_LECTURE, (data: ISocketResponse) => {
+      .on(InquiryEvents.LECTURER_JOIN, (data: ISocketResponse) => {
         const { status } = data;
-        console.log(this.onLecturerJoinError);
         if (status === 200) {
           if (this.onLecturerJoin !== null) {
             this.onLecturerJoin();

@@ -5,7 +5,7 @@ class InquiryEmitter {
 
   joinLecturer(adminCode: string) {
     InquirySocketSingleton.instance.socket
-      .emit(InquiryEvents.JOIN_LECTURER_LECTURE, {
+      .emit(InquiryEvents.LECTURER_JOIN, {
         adminCode,
       })
   }
