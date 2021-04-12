@@ -8,16 +8,26 @@ class InquiryStore {
   ) { };
 
   private page: number = 0;
+  private isLastPage = false;
 
   @observable
   inquiries: IInquiry[] = [];
 
   @action
   async fetch(adminCode: string) {
+    if (this.isLastPage) {
+      return;
+    }
+
     const { inquiries } = await this.inquiryRepository.findInquires(adminCode, this.page);
 
+    if (inquiries.length <= 0) {
+      this.isLastPage = true;
+      return;
+    }
+
     this.page += 1;
-    this.inquiries = this.inquiries.concat(inquiries);
+    this.inquiries = inquiries.concat(this.inquiries);
   }
 
   addInquiry(inquiry: IInquiry) {

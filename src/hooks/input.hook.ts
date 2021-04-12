@@ -15,6 +15,5 @@ export const useInputText = () => {
     text, onChange, clear
   ]
 
-
   return hooksReturnArray;
 }
