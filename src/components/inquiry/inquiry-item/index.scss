@@ -1,8 +1,10 @@
+@import "styles/colors.scss";
+
 .inquiryItem {
   display: flex;
   align-items: flex-start;
   width: 80%;
-  margin: 40px 0;
+  padding: 20px 0;
 
   &-profileImageWrapper {
     margin-top: 5px;
