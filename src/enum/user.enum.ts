@@ -1,6 +1,6 @@
 export enum AccessLevels {
-  STUDENT = 0,
-  PARENT = 1,
+  STUDENT = 1,
+  PARENT = 2,
   TEACHER = 3,
   ADMIN = 4,
 }
