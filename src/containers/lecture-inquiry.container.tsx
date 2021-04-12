@@ -1,4 +1,5 @@
 import { InquiryItem } from 'components/inquiry/inquiry-item';
+import { InquiryList } from 'components/inquiry/inquiry-list';
 import { observer } from 'mobx-react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
@@ -85,8 +86,6 @@ export const LectureInquiryContainer = observer(() => {
   }, [handleFetchInquiries])
 
   return (
-    <div>
-      {inquiryItems}
-    </div>
+    <InquiryList inquiryItems={inquiryItems} />
   );
 });
