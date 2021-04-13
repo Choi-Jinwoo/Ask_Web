@@ -10,6 +10,7 @@ type Props = {
   title: string;
   width?: string;
   height?: string;
+  backgroundColor?: string;
   children: React.ReactNode;
   isOpen: boolean,
   close: () => void;
@@ -19,6 +20,7 @@ export const Modal = ({
   title,
   width = '600px',
   height = '400px',
+  backgroundColor = 'white',
   children,
   isOpen,
   close,
@@ -31,12 +33,13 @@ export const Modal = ({
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         border: `1px solid ${colors.lightGray}`,
+        backgroundColor,
         padding: 0,
         width,
         height,
       }
     };
-  }, [height, width]);
+  }, [backgroundColor, height, width]);
 
   return (
     <ReactModal

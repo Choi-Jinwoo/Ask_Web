@@ -3,6 +3,9 @@
 .modal {
   &-window {
     &-title {
+      user-select: none;
+      position: sticky;
+      top: 0;
       width: 100%;
       padding: 10px 15px;
       border-bottom: 1px solid $lightGray;

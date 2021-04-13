@@ -13,6 +13,7 @@ import './index.scss';
 
 type Props = {
   inquiry: IInquiry,
+  handlePinInquiry: (inquiry: IInquiry) => void;
 }
 
 interface IUserProfile {
@@ -49,7 +50,8 @@ const userToProfile = (user: IUser | null): IUserProfile => {
 }
 
 export const InquiryItem = ({
-  inquiry
+  inquiry,
+  handlePinInquiry,
 }: Props) => {
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
 
@@ -73,12 +75,16 @@ export const InquiryItem = ({
     setIsMouseOver(true);
   }, []);
 
-  const handleMOuseLeave = useCallback(() => {
+  const handleMouseLeave = useCallback(() => {
     setIsMouseOver(false);
   }, []);
 
+  const handlePinClicked = useCallback(() => {
+    handlePinInquiry(inquiry);
+  }, [handlePinInquiry, inquiry])
+
   return (
-    <div className='inquiryItem' onMouseOver={handleMouseOver} onMouseLeave={handleMOuseLeave}>
+    <div className='inquiryItem' onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
       <div className='inquiryItem-profileImageWrapper'>
         <img
           className='inquiryItem-profileImage'
@@ -92,7 +98,7 @@ export const InquiryItem = ({
             className='inquiryItem-content-profile-classroom'
           >{detail}</Text>
           {
-            isMouseOver && <AiFillPushpin className='inquiryItem-content-profile-pin' />
+            isMouseOver && <AiFillPushpin className='inquiryItem-content-profile-pin' onClick={handlePinClicked} />
           }
         </div>
 

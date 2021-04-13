@@ -2,25 +2,22 @@ import { InquiryItem } from 'components/inquiry/inquiry-item';
 import { MessageList } from 'components/inquiry/message-list';
 import { MessageItem } from 'components/inquiry/message-item';
 import { observer } from 'mobx-react';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 import { InquirySocketSingleton } from 'socket/inquiry.socket';
 import { inquiryEmitter } from 'socket/inquiry/inquiry.emitter';
 import { adminCodeStorage } from 'storage/admin-code.storage';
 import { useStores } from 'stores/use-stores';
+import { IInquiry } from 'types/inquiry.interface';
+import { PinnedInquiryModal } from 'components/inquiry/pinned-inquiry-modal';
 
 export const LectureInquiryContainer = observer(() => {
   const refs = useRef<HTMLDivElement>(null);
+
   const { inquiryStore } = useStores();
   const history = useHistory();
 
-  const inquiryItems = inquiryStore.inquiries.map((inquiry, index) => {
-    return (
-      <MessageItem>
-        <InquiryItem inquiry={inquiry} key={index} />
-      </MessageItem>
-    )
-  });
+  const [pinnedInquiry, setPinnedInquiry] = useState<IInquiry | null>(null);
 
   const adminCode: string = useMemo(() => {
     const adminCode = adminCodeStorage.get();
@@ -31,6 +28,14 @@ export const LectureInquiryContainer = observer(() => {
 
     return adminCode as string;
   }, [history]);
+
+  const handlePinInquiry = useCallback((inquiry: IInquiry) => {
+    setPinnedInquiry(inquiry);
+  }, []);
+
+  const handleUnPinInquiry = useCallback(() => {
+    setPinnedInquiry(null);
+  }, [])
 
   const shouldScrollToBottom = useCallback((): boolean => {
     if (refs.current === null) return false;
@@ -58,6 +63,14 @@ export const LectureInquiryContainer = observer(() => {
   const handleFetchInquiries = useCallback((): Promise<void> => {
     return inquiryStore.fetch(adminCode);
   }, [adminCode, inquiryStore]);
+
+  const inquiryItems = inquiryStore.inquiries.map((inquiry, index) => {
+    return (
+      <MessageItem key={index}>
+        <InquiryItem inquiry={inquiry} handlePinInquiry={handlePinInquiry} />
+      </MessageItem>
+    )
+  });
 
   // 데이터 Fetch
   useEffect(() => {
@@ -98,6 +111,9 @@ export const LectureInquiryContainer = observer(() => {
   }, [handleFetchInquiries])
 
   return (
-    <MessageList messageItems={inquiryItems} refs={refs} />
+    <>
+      <PinnedInquiryModal inquiry={pinnedInquiry} handleUnPinInquiry={handleUnPinInquiry} />
+      < MessageList messageItems={inquiryItems} refs={refs} />
+    </>
   );
 });
