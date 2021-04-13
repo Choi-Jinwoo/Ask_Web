@@ -1,8 +1,8 @@
 import { InquiryItem } from 'components/inquiry/inquiry-item';
-import { InquiryList } from 'components/inquiry/inquiry-list';
+import { MessageList } from 'components/inquiry/message-list';
 import { MessageItem } from 'components/inquiry/message-item';
 import { observer } from 'mobx-react';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
 import { InquirySocketSingleton } from 'socket/inquiry.socket';
 import { inquiryEmitter } from 'socket/inquiry/inquiry.emitter';
@@ -10,6 +10,7 @@ import { adminCodeStorage } from 'storage/admin-code.storage';
 import { useStores } from 'stores/use-stores';
 
 export const LectureInquiryContainer = observer(() => {
+  const refs = useRef<HTMLDivElement>(null);
   const { inquiryStore } = useStores();
   const history = useHistory();
 
@@ -31,21 +32,25 @@ export const LectureInquiryContainer = observer(() => {
     return adminCode as string;
   }, [history]);
 
-  const shouldScrollToBottom = useMemo((): boolean => {
-    return window.innerHeight + window.scrollY >= document.body.offsetHeight;
-  }, []);
+  const shouldScrollToBottom = useCallback((): boolean => {
+    if (refs.current === null) return false;
+
+    return refs.current.clientHeight + refs.current.scrollTop >= refs.current.scrollHeight;
+  }, [refs]);
 
   const handleScrollToBottom = useCallback(() => {
-    window.scrollTo({
-      top: document.body.scrollHeight
+    refs.current!.scrollTo({
+      top: refs.current!.scrollHeight
     })
   }, [])
 
   const handleReceiveInquiry = useCallback((data) => {
     const { inquiry } = data.data;
 
+    const shouldScroll = shouldScrollToBottom();
     inquiryStore.addInquiry(inquiry)
-    if (shouldScrollToBottom) {
+
+    if (shouldScroll) {
       handleScrollToBottom();
     }
   }, [handleScrollToBottom, inquiryStore, shouldScrollToBottom])
@@ -70,28 +75,29 @@ export const LectureInquiryContainer = observer(() => {
 
   useEffect(() => {
     let isLoading = false;
-
-    window.addEventListener('scroll', () => {
-      const scrollTop = document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight;
+    refs.current!.addEventListener('scroll', () => {
+      const scrollTop = refs.current!.scrollTop;
+      const height = refs.current!.scrollHeight;
 
       if (scrollTop <= 0) {
         if (!isLoading) {
           isLoading = true;
 
-          handleFetchInquiries()
-            .then(() => {
-              document.documentElement.scrollTo({
-                top: document.documentElement.scrollHeight - height,
+          setTimeout(() => {
+            handleFetchInquiries()
+              .then(() => {
+                refs.current!.scrollTo({
+                  top: refs.current!.scrollHeight - height,
+                });
+                isLoading = false;
               });
-              isLoading = false;
-            });
+          }, 500)
         }
       }
     })
   }, [handleFetchInquiries])
 
   return (
-    <InquiryList inquiryItems={inquiryItems} />
+    <MessageList messageItems={inquiryItems} refs={refs} />
   );
 });

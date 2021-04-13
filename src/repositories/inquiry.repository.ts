@@ -1,6 +1,6 @@
 import { baseAxios } from 'utils/axios';
 
-const TAKE_COUNT_PER_REQUEST = 100;
+const TAKE_COUNT_PER_REQUEST = 12;
 
 export class InquiryRepository {
   async findInquires(adminCode: string, page: number) {
