@@ -1,10 +1,11 @@
 import { Text } from 'components/common/text';
 import { AccessLevels } from 'enum/user.enum';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { colors } from 'styles/colors';
 import { IInquiry } from 'types/inquiry.interface';
 import { IUser } from 'types/user.interface';
 import { formatDate } from 'utils/date/date.util';
+import { AiFillPushpin } from 'react-icons/ai';
 
 import BasicProfile from 'assets/basic_profile.png';
 
@@ -50,6 +51,8 @@ const userToProfile = (user: IUser | null): IUserProfile => {
 export const InquiryItem = ({
   inquiry
 }: Props) => {
+  const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
+
   const { content, user, createdAt } = inquiry;
 
   const userProfile = useMemo(() => {
@@ -62,16 +65,24 @@ export const InquiryItem = ({
 
   const { name, detail, profileImage } = userProfile;
 
-  const onImageLoadError = useCallback((e) => {
+  const handleOnImageLoadError = useCallback((e) => {
     e.target.src = BasicProfile;
   }, []);
 
+  const handleMouseOver = useCallback(() => {
+    setIsMouseOver(true);
+  }, []);
+
+  const handleMOuseLeave = useCallback(() => {
+    setIsMouseOver(false);
+  }, []);
+
   return (
-    <div className='inquiryItem'>
+    <div className='inquiryItem' onMouseOver={handleMouseOver} onMouseLeave={handleMOuseLeave}>
       <div className='inquiryItem-profileImageWrapper'>
         <img
           className='inquiryItem-profileImage'
-          src={profileImage} alt={BasicProfile} onError={onImageLoadError} />
+          src={profileImage} alt={BasicProfile} onError={handleOnImageLoadError} />
       </div>
 
       <div className='inquiryItem-content'>
@@ -80,6 +91,9 @@ export const InquiryItem = ({
           <Text
             className='inquiryItem-content-profile-classroom'
           >{detail}</Text>
+          {
+            isMouseOver && <AiFillPushpin className='inquiryItem-content-profile-pin' />
+          }
         </div>
 
         <div className='inquiryItem-content-inquiry'>
