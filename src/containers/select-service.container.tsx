@@ -33,8 +33,8 @@ export const SelectServiceContainer = () => {
   }, []);
 
   const handleJoinLecturerService = useCallback(() => {
-    InquirySocketSingleton.instance.setOnLecturerJoin(handleSuccessLecturerJoin);
-    InquirySocketSingleton.instance.setOnLecturerJoinError(handleFailLecturerJoin);
+    InquirySocketSingleton.instance.onLecturerJoin = handleSuccessLecturerJoin;
+    InquirySocketSingleton.instance.onLecturerJoinError = handleFailLecturerJoin;
     inquiryEmitter.joinLecturer(adminCode);
   }, [adminCode, handleFailLecturerJoin, handleSuccessLecturerJoin])
 

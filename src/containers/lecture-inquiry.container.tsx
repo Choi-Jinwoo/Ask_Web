@@ -1,5 +1,6 @@
 import { InquiryItem } from 'components/inquiry/inquiry-item';
 import { InquiryList } from 'components/inquiry/inquiry-list';
+import { MessageItem } from 'components/inquiry/message-item';
 import { observer } from 'mobx-react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
@@ -14,7 +15,9 @@ export const LectureInquiryContainer = observer(() => {
 
   const inquiryItems = inquiryStore.inquiries.map((inquiry, index) => {
     return (
-      <InquiryItem inquiry={inquiry} key={index} />
+      <MessageItem>
+        <InquiryItem inquiry={inquiry} key={index} />
+      </MessageItem>
     )
   });
 
@@ -28,6 +31,10 @@ export const LectureInquiryContainer = observer(() => {
     return adminCode as string;
   }, [history]);
 
+  const shouldScrollToBottom = useMemo((): boolean => {
+    return window.innerHeight + window.scrollY >= document.body.offsetHeight;
+  }, []);
+
   const handleScrollToBottom = useCallback(() => {
     window.scrollTo({
       top: document.body.scrollHeight
@@ -36,13 +43,12 @@ export const LectureInquiryContainer = observer(() => {
 
   const handleReceiveInquiry = useCallback((data) => {
     const { inquiry } = data.data;
-    const shouldScrollToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
 
     inquiryStore.addInquiry(inquiry)
     if (shouldScrollToBottom) {
       handleScrollToBottom();
     }
-  }, [handleScrollToBottom, inquiryStore])
+  }, [handleScrollToBottom, inquiryStore, shouldScrollToBottom])
 
   const handleFetchInquiries = useCallback((): Promise<void> => {
     return inquiryStore.fetch(adminCode);
@@ -58,8 +64,8 @@ export const LectureInquiryContainer = observer(() => {
 
   // 소켓 이벤트 Emit & 이벤트 리스너 등록
   useEffect(() => {
+    InquirySocketSingleton.instance.onReceiveInquiry = handleReceiveInquiry;
     inquiryEmitter.joinLecturer(adminCode);
-    InquirySocketSingleton.instance.setOnReceiveInquiry(handleReceiveInquiry);
   }, [adminCode, handleReceiveInquiry]);
 
   useEffect(() => {

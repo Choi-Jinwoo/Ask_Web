@@ -8,20 +8,25 @@ export class InquirySocketSingleton {
 
   readonly socket;
 
-  private onLecturerJoin: Function | null = null;
-  private onLecturerJoinError: Function | null = null;
-  private onReceiveInquiry: Function | null = null;
+  private _onLecturerJoin: Function | null = null;
+  private _onLecturerJoinError: Function | null = null;
+  private _onReceiveInquiry: Function | null = null;
+  private _onUserJoin: Function | null = null;
 
-  setOnLecturerJoin(handler: Function) {
-    this.onLecturerJoin = handler;
+  set onLecturerJoin(handler: Function) {
+    this._onLecturerJoin = handler;
   }
 
-  setOnLecturerJoinError(handler: Function) {
-    this.onLecturerJoinError = handler;
+  set onLecturerJoinError(handler: Function) {
+    this._onLecturerJoinError = handler;
   }
 
-  setOnReceiveInquiry(handler: Function) {
-    this.onReceiveInquiry = handler;
+  set onReceiveInquiry(handler: Function) {
+    this._onReceiveInquiry = handler;
+  }
+
+  set onUserJoin(handler: Function) {
+    this._onUserJoin = handler;
   }
 
   private constructor() {
@@ -35,20 +40,26 @@ export class InquirySocketSingleton {
       .on(InquiryEvents.LECTURER_JOIN, (data: ISocketResponse) => {
         const { status } = data;
         if (status === 200) {
-          if (this.onLecturerJoin !== null) {
-            this.onLecturerJoin();
+          if (this._onLecturerJoin !== null) {
+            this._onLecturerJoin();
           }
-        } else if (this.onLecturerJoinError !== null) {
-          this.onLecturerJoinError();
+        } else if (this._onLecturerJoinError !== null) {
+          this._onLecturerJoinError();
         }
       });
 
     this.socket
       .on(InquiryEvents.NEW_INQUIRY, (data: ISocketResponse) => {
-        if (this.onReceiveInquiry !== null) {
-          this.onReceiveInquiry(data);
+        if (this._onReceiveInquiry !== null) {
+          this._onReceiveInquiry(data);
         }
       });
+
+    this.socket.on(InquiryEvents.USER_JOINED, (data: ISocketResponse) => {
+      if (this._onUserJoin !== null) {
+        this._onUserJoin(data);
+      }
+    });
   }
 
   static get instance() {
