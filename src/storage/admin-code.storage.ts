@@ -18,6 +18,10 @@ class AdminCodeStorage implements IStorage<string> {
 
     return true;
   }
+
+  remove(): void {
+    sessionStorage.removeItem(ADMIN_CODE_KEY);
+  }
 }
 
 export const adminCodeStorage = new AdminCodeStorage();

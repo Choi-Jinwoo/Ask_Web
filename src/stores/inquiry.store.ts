@@ -1,6 +1,7 @@
 import { action, observable } from 'mobx';
 import { InquiryRepository } from 'repositories/inquiry.repository';
 import { IInquiry } from 'types/inquiry.interface';
+import { ILecture } from 'types/lecture.interface';
 
 class InquiryStore {
   constructor(
@@ -12,6 +13,9 @@ class InquiryStore {
 
   @observable
   inquiries: IInquiry[] = [];
+
+  @observable
+  lecture: ILecture | null = null;
 
   @action
   async fetch(adminCode: string) {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SelectService } from 'components/select-service';
 import { JoinLecturerModal } from 'components/lecturer/join-lecturer-modal';
 import { inquiryEmitter } from 'socket/inquiry/inquiry.emitter';
@@ -6,8 +6,11 @@ import { useHistory } from 'react-router';
 import { adminCodeStorage } from 'storage/admin-code.storage';
 import { useInputText } from 'hooks/input.hook';
 import { InquirySocketSingleton } from 'socket/inquiry.socket';
+import { inquiryStore } from 'stores/inquiry.store';
+import { lectureStorage } from 'storage/lecture.storage';
+import { observer } from 'mobx-react';
 
-export const SelectServiceContainer = () => {
+export const SelectServiceContainer = observer(() => {
   const history = useHistory();
   const [adminCode, onAdminCodeChange, clearAdminCode] = useInputText();
 
@@ -23,7 +26,9 @@ export const SelectServiceContainer = () => {
     setJoinLecturerModalOpen(true);
   }, [])
 
-  const handleSuccessLecturerJoin = useCallback(() => {
+  const handleSuccessLecturerJoin = useCallback((data) => {
+    const { lecture } = data.data;
+    lectureStorage.set(JSON.stringify(lecture));
     adminCodeStorage.set(adminCode);
     history.push('/lecture');
   }, [adminCode, history]);
@@ -38,6 +43,12 @@ export const SelectServiceContainer = () => {
     inquiryEmitter.joinLecturer(adminCode);
   }, [adminCode, handleFailLecturerJoin, handleSuccessLecturerJoin])
 
+  useEffect(() => {
+    adminCodeStorage.remove();
+    lectureStorage.remove();
+    inquiryStore.lecture = null;
+  }, [])
+
   return (
     <div>
       <JoinLecturerModal
@@ -50,4 +61,4 @@ export const SelectServiceContainer = () => {
         handleClickLecturerService={handleClickLecturerService} />
     </div>
   )
-}
+});

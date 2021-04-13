@@ -10,6 +10,7 @@ import { adminCodeStorage } from 'storage/admin-code.storage';
 import { useStores } from 'stores/use-stores';
 import { IInquiry } from 'types/inquiry.interface';
 import { PinnedInquiryModal } from 'components/inquiry/pinned-inquiry-modal';
+import { lectureStorage } from 'storage/lecture.storage';
 
 export const LectureInquiryContainer = observer(() => {
   const refs = useRef<HTMLDivElement>(null);
@@ -33,7 +34,7 @@ export const LectureInquiryContainer = observer(() => {
     setPinnedInquiry(inquiry);
   }, []);
 
-  const handleUnPinInquiry = useCallback(() => {
+  const handleUnpinInquiry = useCallback(() => {
     setPinnedInquiry(null);
   }, [])
 
@@ -86,6 +87,7 @@ export const LectureInquiryContainer = observer(() => {
     inquiryEmitter.joinLecturer(adminCode);
   }, [adminCode, handleReceiveInquiry]);
 
+  // 스크롤 이벤트 지정
   useEffect(() => {
     let isLoading = false;
     refs.current!.addEventListener('scroll', () => {
@@ -110,9 +112,17 @@ export const LectureInquiryContainer = observer(() => {
     })
   }, [handleFetchInquiries])
 
+  useEffect(() => {
+    if (lectureStorage.hasItem()) {
+      inquiryStore.lecture = JSON.parse(lectureStorage.get() as string);
+      console.log(inquiryStore.lecture);
+    }
+  }, [inquiryStore])
+
+
   return (
     <>
-      <PinnedInquiryModal inquiry={pinnedInquiry} handleUnPinInquiry={handleUnPinInquiry} />
+      <PinnedInquiryModal inquiry={pinnedInquiry} handleUnPinInquiry={handleUnpinInquiry} />
       < MessageList messageItems={inquiryItems} refs={refs} />
     </>
   );

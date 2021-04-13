@@ -41,7 +41,7 @@ export class InquirySocketSingleton {
         const { status } = data;
         if (status === 200) {
           if (this._onLecturerJoin !== null) {
-            this._onLecturerJoin();
+            this._onLecturerJoin(data);
           }
         } else if (this._onLecturerJoinError !== null) {
           this._onLecturerJoinError();
