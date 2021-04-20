@@ -9,6 +9,7 @@ import { colors } from 'styles/colors';
 type Props = {
   title: string;
   width?: string;
+  maxWidth?: string;
   height?: string;
   backgroundColor?: string;
   children: React.ReactNode;
@@ -19,6 +20,7 @@ type Props = {
 export const Modal = ({
   title,
   width = '600px',
+  maxWidth = '',
   height = '400px',
   backgroundColor = 'white',
   children,
@@ -37,9 +39,10 @@ export const Modal = ({
         padding: 0,
         width,
         height,
+        maxWidth,
       }
     };
-  }, [backgroundColor, height, width]);
+  }, [backgroundColor, height, maxWidth, width]);
 
   return (
     <ReactModal

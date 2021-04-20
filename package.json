@@ -16,6 +16,7 @@
     "axios": "^0.21.1",
     "core-decorators": "^0.20.0",
     "dtil": "^1.1.0",
+    "js-sha512": "^0.8.0",
     "mobx": "^5.15.6",
     "mobx-react": "^6.2.5",
     "node-sass": "^5.0.0",
