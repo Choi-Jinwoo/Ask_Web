@@ -21,12 +21,14 @@ export const SelectServiceCard = ({
       className='selectServiceCard'
       onClick={onClick} >
       <div className='selectServiceCard-contentWrapper'>
-        <Text
-          className='selectServiceCard-title'
-          size='big'>{title}</Text>
-        <Text
-          className='selectServiceCard-subTitle'
-        >{subTitle}</Text>
+        <div className='selectServiceCard-textWrapper'>
+          <Text
+            className='selectServiceCard-title'
+            size='big'>{title}</Text>
+          <Text
+            className='selectServiceCard-subTitle'
+          >{subTitle}</Text>
+        </div>
         <img src={image} alt="" />
       </div>
     </div>

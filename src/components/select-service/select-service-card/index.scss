@@ -9,28 +9,69 @@
   cursor: pointer;
   overflow: hidden;
 
+  @media only screen and (max-width: 1024px) {
+    width: 90%;
+    height: 200px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
   &-contentWrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: transform 0.5s;
 
+    @media only screen and (max-width: 1024px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
     &:hover {
+      @media only screen and (max-width: 1024px) {
+        transform: none;
+      }
+
       transform: scale(1.1);
     }
+  }
+
+  &-textWrapper {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
   }
 
   img {
     width: 60%;
     object-fit: cover;
+
+    @media only screen and (max-width: 1024px) {
+      width: 40%;
+    }
   }
 
   &-title {
     margin-top: 100px;
     margin-bottom: 10px;
+    text-align: center;
+
+    @media only screen and (max-width: 1024px) {
+      margin: 0;
+      text-align: left;
+    }
   }
 
   &-subTitle {
     margin-bottom: 100px;
+    text-align: center;
+
+    @media only screen and (max-width: 1024px) {
+      margin: 0;
+      text-align: left;
+    }
   }
 }
