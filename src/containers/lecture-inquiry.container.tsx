@@ -113,12 +113,13 @@ export const LectureInquiryContainer = observer(() => {
   }, [handleFetchInquiries])
 
   useEffect(() => {
-    if (lectureStorage.hasItem()) {
+    if (!adminCodeStorage.hasItem()) {
+      alert('다시 로그인 해주세요');
+      history.push('/');
+    } else if (lectureStorage.hasItem()) {
       inquiryStore.lecture = JSON.parse(lectureStorage.get() as string);
-      console.log(inquiryStore.lecture);
     }
-  }, [inquiryStore])
-
+  }, [history, inquiryStore])
 
   return (
     <>
