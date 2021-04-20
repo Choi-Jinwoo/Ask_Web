@@ -117,7 +117,7 @@ export const LectureInquiryContainer = observer(() => {
       alert('다시 로그인 해주세요');
       history.push('/');
     } else if (lectureStorage.hasItem()) {
-      inquiryStore.lecture = JSON.parse(lectureStorage.get() as string);
+      inquiryStore.lecture = lectureStorage.get();
     }
   }, [history, inquiryStore])
 

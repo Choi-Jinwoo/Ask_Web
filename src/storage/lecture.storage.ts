@@ -1,15 +1,18 @@
+import { ILecture } from 'types/lecture.interface';
 import { IStorage } from './storage.interface';
 
 const LECTURE_KEY = 'lecture';
 
-class LectureStorage implements IStorage<string> {
+class LectureStorage implements IStorage<ILecture> {
 
-  get(): string | null {
-    return sessionStorage.getItem(LECTURE_KEY);
+  get(): ILecture | null {
+    const jsonData = sessionStorage.getItem(LECTURE_KEY);
+
+    return jsonData === null ? null : JSON.parse(jsonData);
   }
 
-  set(item: string): void {
-    sessionStorage.setItem(LECTURE_KEY, item);
+  set(item: ILecture): void {
+    sessionStorage.setItem(LECTURE_KEY, JSON.stringify(item));
   }
 
   hasItem(): boolean {

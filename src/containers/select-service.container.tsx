@@ -28,7 +28,7 @@ export const SelectServiceContainer = observer(() => {
 
   const handleSuccessLecturerJoin = useCallback((data) => {
     const { lecture } = data.data;
-    lectureStorage.set(JSON.stringify(lecture));
+    lectureStorage.set(lecture);
     adminCodeStorage.set(adminCode);
     history.push('/lecture');
   }, [adminCode, history]);
