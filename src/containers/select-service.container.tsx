@@ -10,12 +10,15 @@ import { inquiryStore } from 'stores/inquiry.store';
 import { lectureStorage } from 'storage/lecture.storage';
 import { observer } from 'mobx-react';
 import { JoinAuditorModal } from 'components/auditor/join-auditor-modal';
+import { tokenStorage } from 'storage/token.storage';
+import { LoginModal } from 'components/auth/login-modal';
 
 export const SelectServiceContainer = observer(() => {
   const history = useHistory();
   const [adminCode, onAdminCodeChange, clearAdminCode] = useInputText();
   const [joinCode, onJoinCodeChange, clearJoinCode] = useInputText();
-
+  const [isLoginModalOpen, setLoginModalOpen] =
+    useState<boolean>(false);
   const [isJoinLecturerModalOpen, setJoinLecturerModalOpen]
     = useState<boolean>(false);
   const [isJoinAuditorModalOpen, setJoinAuditorModalOpen]
@@ -31,12 +34,20 @@ export const SelectServiceContainer = observer(() => {
     clearAdminCode();
   }, [clearAdminCode])
 
+  const handleCloseLoginModal = useCallback(() => {
+    setLoginModalOpen(false);
+  }, [])
+
   const handleClickLecturerService = useCallback(() => {
     setJoinLecturerModalOpen(true);
   }, [])
 
   const handleClickAuditorService = useCallback(() => {
-    setJoinAuditorModalOpen(true);
+    if (!tokenStorage.hasItem()) {
+      setLoginModalOpen(true);
+    } else {
+      setJoinAuditorModalOpen(true);
+    }
   }, [])
 
   const handleSuccessLecturerJoin = useCallback((data) => {
@@ -45,6 +56,10 @@ export const SelectServiceContainer = observer(() => {
     adminCodeStorage.set(adminCode);
     history.push('/lecture');
   }, [adminCode, history]);
+
+  const handleLoginSuccess = useCallback(() => {
+    setJoinAuditorModalOpen(true);
+  }, []);
 
   const handleFailLecturerJoin = useCallback(() => {
     alert('관리자 번호가 옳지 않습니다');
@@ -76,6 +91,11 @@ export const SelectServiceContainer = observer(() => {
         handleJoin={handleJoinLecturerService}
         isOpen={isJoinAuditorModalOpen}
         handleClose={handleCloseJoinAuditorModal} />
+      <LoginModal
+        handleSuccess={handleLoginSuccess}
+        isOpen={isLoginModalOpen}
+        handleClose={handleCloseLoginModal}
+      />
       <SelectService
         handleClickAuditorService={handleClickAuditorService}
         handleClickLecturerService={handleClickLecturerService} />

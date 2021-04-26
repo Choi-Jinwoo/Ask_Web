@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Modal } from 'components/common/modal';
 import { Text } from 'components/common/text';
 

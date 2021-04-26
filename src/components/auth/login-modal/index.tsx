@@ -11,11 +11,13 @@ import { tokenStorage } from 'storage/token.storage';
 type Props = {
   isOpen: boolean;
   handleClose: () => void;
+  handleSuccess: () => void;
 }
 
 export const LoginModal = ({
   isOpen,
   handleClose,
+  handleSuccess,
 }: Props) => {
   const [id, onIdChange, clearId] = useInputText();
   const [pw, onPwChange, clearPw] = useInputText();
@@ -26,7 +28,7 @@ export const LoginModal = ({
     authStore.login(id, pw)
       .then((token) => {
         tokenStorage.set(token);
-        alert('로그인 성공');
+        handleSuccess();
         handleClose();
       })
       .catch(() => {
@@ -36,7 +38,7 @@ export const LoginModal = ({
         clearId();
         clearPw();
       })
-  }, [authStore, clearId, clearPw, handleClose, id, pw])
+  }, [authStore, clearId, clearPw, handleClose, handleSuccess, id, pw])
 
   return (
     <Modal
