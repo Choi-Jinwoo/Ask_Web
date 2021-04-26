@@ -5,7 +5,7 @@ const TOKEN_KEY = 'token';
 class TokenStorage implements IStorage<string> {
 
   get(): string | null {
-    return sessionStorage.get(TOKEN_KEY);
+    return sessionStorage.getItem(TOKEN_KEY);
   }
 
   set(item: string): void {

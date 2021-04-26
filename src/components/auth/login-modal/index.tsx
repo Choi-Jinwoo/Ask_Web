@@ -45,7 +45,7 @@ export const LoginModal = ({
       close={handleClose}
       maxWidth='400px'
       width='90%'
-      height='400px'
+      height='320px'
     >
       <div className='loginModal'>
         <Text size='small' >도담도담 아이디, 비밀번호를 사용하여 로그인 해보세요</Text>
