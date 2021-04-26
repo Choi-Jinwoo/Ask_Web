@@ -9,13 +9,22 @@ import { InquirySocketSingleton } from 'socket/inquiry.socket';
 import { inquiryStore } from 'stores/inquiry.store';
 import { lectureStorage } from 'storage/lecture.storage';
 import { observer } from 'mobx-react';
+import { JoinAuditorModal } from 'components/auditor/join-auditor-modal';
 
 export const SelectServiceContainer = observer(() => {
   const history = useHistory();
   const [adminCode, onAdminCodeChange, clearAdminCode] = useInputText();
+  const [joinCode, onJoinCodeChange, clearJoinCode] = useInputText();
 
   const [isJoinLecturerModalOpen, setJoinLecturerModalOpen]
     = useState<boolean>(false);
+  const [isJoinAuditorModalOpen, setJoinAuditorModalOpen]
+    = useState<boolean>(false);
+
+  const handleCloseJoinAuditorModal = useCallback(() => {
+    setJoinAuditorModalOpen(false);
+    clearJoinCode();
+  }, [clearJoinCode])
 
   const handleCloseJoinLecturerModal = useCallback(() => {
     setJoinLecturerModalOpen(false);
@@ -24,6 +33,10 @@ export const SelectServiceContainer = observer(() => {
 
   const handleClickLecturerService = useCallback(() => {
     setJoinLecturerModalOpen(true);
+  }, [])
+
+  const handleClickAuditorService = useCallback(() => {
+    setJoinAuditorModalOpen(true);
   }, [])
 
   const handleSuccessLecturerJoin = useCallback((data) => {
@@ -57,7 +70,14 @@ export const SelectServiceContainer = observer(() => {
         handleJoin={handleJoinLecturerService}
         isOpen={isJoinLecturerModalOpen}
         handleClose={handleCloseJoinLecturerModal} />
+      <JoinAuditorModal
+        joinCode={joinCode}
+        onJoinCodeChange={onJoinCodeChange}
+        handleJoin={handleJoinLecturerService}
+        isOpen={isJoinAuditorModalOpen}
+        handleClose={handleCloseJoinAuditorModal} />
       <SelectService
+        handleClickAuditorService={handleClickAuditorService}
         handleClickLecturerService={handleClickLecturerService} />
     </div>
   )

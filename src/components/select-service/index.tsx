@@ -9,10 +9,12 @@ import './index.scss';
 
 type Props = {
   handleClickLecturerService: () => void;
+  handleClickAuditorService: () => void;
 }
 
 export const SelectService = ({
-  handleClickLecturerService
+  handleClickLecturerService,
+  handleClickAuditorService,
 }: Props) => {
   return (
     <div className='selectService'>
@@ -25,6 +27,7 @@ export const SelectService = ({
           image={StudentIllustrator}
           title='수강자 서비스'
           subTitle='강의에 대해 질문해보세요!'
+          onClick={handleClickAuditorService}
         />
 
         <SelectServiceCard
