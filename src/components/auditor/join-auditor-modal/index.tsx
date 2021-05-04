@@ -15,6 +15,7 @@ export const JoinAuditorModal = ({
   onJoinCodeChange,
   isOpen,
   handleClose,
+  handleJoin,
 }: Props) => {
   return (
     <Modal
@@ -37,7 +38,7 @@ export const JoinAuditorModal = ({
 
         <div className='joinLecturerModal-buttonWrapper'>
           <Button
-          // onClick={onJoinClick}
+            onClick={handleJoin}
           >접속</Button>
         </div>
       </div>

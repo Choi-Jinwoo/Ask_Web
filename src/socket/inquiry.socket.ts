@@ -11,7 +11,6 @@ export class InquirySocketSingleton {
   private _onLecturerJoin: Function | null = null;
   private _onLecturerJoinError: Function | null = null;
   private _onReceiveInquiry: Function | null = null;
-  private _onUserJoin: Function | null = null;
 
   set onLecturerJoin(handler: Function) {
     this._onLecturerJoin = handler;
@@ -23,10 +22,6 @@ export class InquirySocketSingleton {
 
   set onReceiveInquiry(handler: Function) {
     this._onReceiveInquiry = handler;
-  }
-
-  set onUserJoin(handler: Function) {
-    this._onUserJoin = handler;
   }
 
   private constructor() {
@@ -54,12 +49,6 @@ export class InquirySocketSingleton {
           this._onReceiveInquiry(data);
         }
       });
-
-    this.socket.on(InquiryEvents.USER_JOINED, (data: ISocketResponse) => {
-      if (this._onUserJoin !== null) {
-        this._onUserJoin(data);
-      }
-    });
   }
 
   static get instance() {

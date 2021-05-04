@@ -29,7 +29,8 @@ export const JoinLecturerModal = ({
       title='강사 페이지 접속'
       isOpen={isOpen}
       close={handleClose}
-      width='400px'
+      maxWidth='400px'
+      width='90%'
       height='225px'
     >
       <div className='joinLecturerModal'>

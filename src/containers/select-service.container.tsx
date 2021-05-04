@@ -12,9 +12,13 @@ import { observer } from 'mobx-react';
 import { JoinAuditorModal } from 'components/auditor/join-auditor-modal';
 import { tokenStorage } from 'storage/token.storage';
 import { LoginModal } from 'components/auth/login-modal';
+import { useStores } from 'stores/use-stores';
 
 export const SelectServiceContainer = observer(() => {
+  const { lectureStore } = useStores();
+
   const history = useHistory();
+
   const [adminCode, onAdminCodeChange, clearAdminCode] = useInputText();
   const [joinCode, onJoinCodeChange, clearJoinCode] = useInputText();
   const [isLoginModalOpen, setLoginModalOpen] =
@@ -71,6 +75,32 @@ export const SelectServiceContainer = observer(() => {
     inquiryEmitter.joinLecturer(adminCode);
   }, [adminCode, handleFailLecturerJoin, handleSuccessLecturerJoin])
 
+  const handleJoinAuditorService = useCallback(() => {
+    lectureStore.join(joinCode)
+      .then((lecture) => {
+        lectureStorage.set(lecture);
+        history.push('auditor');
+      })
+      .catch((err) => {
+        console.log(err);
+
+        switch (err.response.status) {
+          case 410:
+          case 401:
+            alert('다시 로그인해주세요')
+            tokenStorage.remove();
+            break;
+
+          case 404:
+            alert('접속 코드를 확인해주세요')
+            break;
+
+          default:
+            alert('다시 시도해주세요');
+        }
+      })
+  }, [history, joinCode, lectureStore])
+
   useEffect(() => {
     adminCodeStorage.remove();
     lectureStorage.remove();
@@ -88,7 +118,7 @@ export const SelectServiceContainer = observer(() => {
       <JoinAuditorModal
         joinCode={joinCode}
         onJoinCodeChange={onJoinCodeChange}
-        handleJoin={handleJoinLecturerService}
+        handleJoin={handleJoinAuditorService}
         isOpen={isJoinAuditorModalOpen}
         handleClose={handleCloseJoinAuditorModal} />
       <LoginModal
