@@ -6,15 +6,17 @@ import 'styles/toggle.css';
 import './index.scss';
 
 type Props = {
-  isAnonymous: boolean;
-  toggleAnonymous: () => void;
+  handleSendInquiry: () => void;
+  isAnonymity: boolean;
+  toggleAnonymity: () => void;
   content: string;
   onContentChange: (e: any) => void;
 }
 
 export const InquiryInput = ({
-  isAnonymous,
-  toggleAnonymous,
+  handleSendInquiry,
+  isAnonymity,
+  toggleAnonymity,
   content,
   onContentChange,
 }: Props) => {
@@ -22,7 +24,7 @@ export const InquiryInput = ({
   return (
     <div className='inquiryInput'>
       <div className='inquiryInput-anonymous'>
-        <Toggle checked={isAnonymous} onChange={toggleAnonymous} />
+        <Toggle checked={isAnonymity} onChange={toggleAnonymity} />
         <Text className='inquiryInput-anonymous-info' size='1.25rem'>익명</Text>
       </div>
 
@@ -33,7 +35,7 @@ export const InquiryInput = ({
         onChange={onContentChange}
       />
 
-      <Button>전송</Button>
+      <Button onClick={handleSendInquiry}>전송</Button>
     </div>
   )
 }

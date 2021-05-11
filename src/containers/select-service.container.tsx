@@ -79,6 +79,7 @@ export const SelectServiceContainer = observer(() => {
     lectureStore.join(joinCode)
       .then((lecture) => {
         lectureStorage.set(lecture);
+        InquirySocketSingleton.instance.connectSocket();
         history.push('auditor');
       })
       .catch((err) => {

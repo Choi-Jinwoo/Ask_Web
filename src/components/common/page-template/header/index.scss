@@ -13,6 +13,10 @@
   top: 0;
 
   &-serviceIntro {
+    @media only screen and (max-width: 1024px) {
+      visibility: hidden;
+    }
+
     display: flex;
     align-items: center;
     position: absolute;

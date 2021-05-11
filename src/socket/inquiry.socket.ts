@@ -2,11 +2,12 @@ import io from 'socket.io-client';
 import { SOCKET_ENDPOINT } from 'config/endpoint';
 import { InquiryEvents } from './inquiry/inquiry.event';
 import { ISocketResponse } from './base.response';
+import { tokenStorage } from 'storage/token.storage';
 
 export class InquirySocketSingleton {
   private static _instance: InquirySocketSingleton;
 
-  readonly socket;
+  public socket!: SocketIOClient.Socket;
 
   private _onLecturerJoin: Function | null = null;
   private _onLecturerJoinError: Function | null = null;
@@ -24,9 +25,16 @@ export class InquirySocketSingleton {
     this._onReceiveInquiry = handler;
   }
 
-  private constructor() {
+  connectSocket() {
+    if (this.socket !== undefined) {
+      this.socket.disconnect();
+    }
+
     const socket = io(`${SOCKET_ENDPOINT}/inquiry`, {
       transports: ['websocket'],
+      query: {
+        'x-access-token': tokenStorage.get(),
+      },
     });
 
     this.socket = socket;
@@ -49,6 +57,10 @@ export class InquirySocketSingleton {
           this._onReceiveInquiry(data);
         }
       });
+  }
+
+  private constructor() {
+    this.connectSocket();
   }
 
   static get instance() {
