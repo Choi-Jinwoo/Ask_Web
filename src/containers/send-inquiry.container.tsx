@@ -1,19 +1,20 @@
-import { LoginModal } from 'components/auth/login-modal'
-import { useCallback, useState } from 'react'
+import { InquiryInput } from 'components/auditor/inquiry-input';
+import { useInputText } from 'hooks/input.hook';
+import { useToggle } from 'hooks/toggle.hook';
+import { observer } from 'mobx-react';
 
-export const SendInquiryContainer = () => {
-  const [isLoginModalOpen, setLoginModalOpen] = useState<boolean>(true);
-
-  const handleCloseLoginModal = useCallback(() => {
-    setLoginModalOpen(false);
-  }, [])
+export const SendInquiryContainer = observer(() => {
+  const [isAnonymous, toggleAnonymous] = useToggle(false);
+  const [content, onContentChange, clearContent] = useInputText('');
 
   return (
-    <div>
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        handleClose={handleCloseLoginModal}
+    <>
+      <InquiryInput
+        isAnonymous={isAnonymous}
+        toggleAnonymous={toggleAnonymous}
+        content={content}
+        onContentChange={onContentChange}
       />
-    </div>
+    </>
   )
-}
+});

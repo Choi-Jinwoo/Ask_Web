@@ -19,8 +19,8 @@ export const SelectServiceContainer = observer(() => {
 
   const history = useHistory();
 
-  const [adminCode, onAdminCodeChange, clearAdminCode] = useInputText();
-  const [joinCode, onJoinCodeChange, clearJoinCode] = useInputText();
+  const [adminCode, onAdminCodeChange, clearAdminCode] = useInputText('');
+  const [joinCode, onJoinCodeChange, clearJoinCode] = useInputText('');
   const [isLoginModalOpen, setLoginModalOpen] =
     useState<boolean>(false);
   const [isJoinLecturerModalOpen, setJoinLecturerModalOpen]

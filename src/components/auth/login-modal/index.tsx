@@ -19,8 +19,8 @@ export const LoginModal = ({
   handleClose,
   handleSuccess,
 }: Props) => {
-  const [id, onIdChange, clearId] = useInputText();
-  const [pw, onPwChange, clearPw] = useInputText();
+  const [id, onIdChange, clearId] = useInputText('');
+  const [pw, onPwChange, clearPw] = useInputText('');
 
   const { authStore } = useStores();
 

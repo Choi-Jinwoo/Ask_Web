@@ -1,6 +1,7 @@
 @import "styles/colors.scss";
 
 .header {
+  z-index: 1000;
   position: fixed;
   display: flex;
   align-items: center;
