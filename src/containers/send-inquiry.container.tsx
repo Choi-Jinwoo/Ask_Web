@@ -19,6 +19,7 @@ export const SendInquiryContainer = observer(() => {
   const handleSendInquiry = useCallback(() => {
     if (content.trim().length <= 0) {
       alert('내용을 입력해주세요');
+      return;
     }
 
     if (inquiryStore.lecture !== null) {

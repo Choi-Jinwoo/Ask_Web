@@ -11,11 +11,25 @@ class InquiryStore {
   private page: number = 0;
   private isLastPage = false;
 
+  get shouldMoveScroll() {
+    if (this.isLastPage === true) {
+      return false
+    };
+
+    return true;
+  }
+
   @observable
   inquiries: IInquiry[] = [];
 
   @observable
   lecture: ILecture | null = null;
+
+  @action init() {
+    this.inquiries = [];
+    this.isLastPage = false;
+    this.page = 0;
+  }
 
   @action
   async fetch(adminCode: string) {

@@ -72,6 +72,8 @@ export const SelectServiceContainer = observer(() => {
   const handleJoinLecturerService = useCallback(() => {
     InquirySocketSingleton.instance.onLecturerJoin = handleSuccessLecturerJoin;
     InquirySocketSingleton.instance.onLecturerJoinError = handleFailLecturerJoin;
+    inquiryStore.init();
+    InquirySocketSingleton.instance.connectSocket();
     inquiryEmitter.joinLecturer(adminCode);
   }, [adminCode, handleFailLecturerJoin, handleSuccessLecturerJoin])
 

@@ -2,7 +2,7 @@ import { InquiryItem } from 'components/inquiry/inquiry-item';
 import { MessageList } from 'components/inquiry/message-list';
 import { MessageItem } from 'components/inquiry/message-item';
 import { observer } from 'mobx-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 import { InquirySocketSingleton } from 'socket/inquiry.socket';
 import { inquiryEmitter } from 'socket/inquiry/inquiry.emitter';
@@ -20,7 +20,7 @@ export const LectureInquiryContainer = observer(() => {
 
   const [pinnedInquiry, setPinnedInquiry] = useState<IInquiry | null>(null);
 
-  const adminCode: string = useMemo(() => {
+  const handleExtractAdminCode = useCallback((): string => {
     const adminCode = adminCodeStorage.get();
     if (adminCodeStorage === null) {
       alert('다시 로그인 해주세요');
@@ -45,6 +45,7 @@ export const LectureInquiryContainer = observer(() => {
   }, [refs]);
 
   const handleScrollToBottom = useCallback(() => {
+    if (refs.current === null) return;
     refs.current!.scrollTo({
       top: refs.current!.scrollHeight
     })
@@ -62,8 +63,8 @@ export const LectureInquiryContainer = observer(() => {
   }, [handleScrollToBottom, inquiryStore, shouldScrollToBottom])
 
   const handleFetchInquiries = useCallback((): Promise<void> => {
-    return inquiryStore.fetch(adminCode);
-  }, [adminCode, inquiryStore]);
+    return inquiryStore.fetch(handleExtractAdminCode());
+  }, [handleExtractAdminCode, inquiryStore]);
 
   const inquiryItems = inquiryStore.inquiries.map((inquiry, index) => {
     return (
@@ -79,13 +80,13 @@ export const LectureInquiryContainer = observer(() => {
       .then(() => {
         handleScrollToBottom();
       })
-  }, [adminCode, handleFetchInquiries, handleReceiveInquiry, handleScrollToBottom, history, inquiryStore])
+  }, [handleFetchInquiries, handleScrollToBottom])
 
   // 소켓 이벤트 Emit & 이벤트 리스너 등록
   useEffect(() => {
     InquirySocketSingleton.instance.onReceiveInquiry = handleReceiveInquiry;
-    inquiryEmitter.joinLecturer(adminCode);
-  }, [adminCode, handleReceiveInquiry]);
+    inquiryEmitter.joinLecturer(handleExtractAdminCode());
+  }, [handleExtractAdminCode, handleReceiveInquiry]);
 
   // 스크롤 이벤트 지정
   useEffect(() => {
@@ -101,16 +102,18 @@ export const LectureInquiryContainer = observer(() => {
           setTimeout(() => {
             handleFetchInquiries()
               .then(() => {
-                refs.current!.scrollTo({
-                  top: refs.current!.scrollHeight - height,
-                });
+                if (inquiryStore.shouldMoveScroll) {
+                  refs.current!.scrollTo({
+                    top: refs.current!.scrollHeight - height,
+                  });
+                }
                 isLoading = false;
               });
           }, 500)
         }
       }
     })
-  }, [handleFetchInquiries])
+  }, [handleFetchInquiries, inquiryStore.shouldMoveScroll])
 
   useEffect(() => {
     if (!adminCodeStorage.hasItem()) {

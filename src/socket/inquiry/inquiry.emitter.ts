@@ -12,8 +12,6 @@ class InquiryEmitter {
   }
 
   sendInquiry(data: ISendInquiryRequest) {
-    console.log(data);
-
     InquirySocketSingleton.instance.socket
       .emit(InquiryEvents.SEND_INQUIRY, data);
   }
