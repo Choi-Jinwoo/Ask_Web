@@ -1,10 +1,11 @@
-import { CSSProperties, useMemo } from 'react';
+import { CSSProperties, useCallback, useMemo } from 'react';
 import { colors } from 'styles/colors';
 import { composeSize } from 'utils/ui';
 
 type ColorType = 'light' | 'dark';
 type SizeType = 'big' | 'regular' | 'small';
-type WeightType = 'bold' | 'bolder' | 'normal' | 'lighter'
+type WeightType = 'bold' | 'bolder' | 'normal' | 'lighter';
+type CursorType = 'none' | 'pointer';
 
 type Props = {
   tag?: keyof JSX.IntrinsicElements;
@@ -12,6 +13,8 @@ type Props = {
   color?: ColorType | string;
   size?: SizeType | string;
   weight?: WeightType;
+  cursor?: CursorType;
+  onClick?: Function;
   children: string;
 }
 
@@ -50,6 +53,8 @@ export const Text = ({
   size = 'regular',
   color = 'dark',
   weight = 'normal',
+  cursor = 'none',
+  onClick,
   children
 }: Props) => {
   const styles = useMemo((): CSSProperties => {
@@ -57,10 +62,20 @@ export const Text = ({
       fontSize: getSize(size),
       color: getColor(color),
       fontWeight: weight,
+      cursor,
     }
-  }, [color, size, weight]);
+  }, [color, cursor, size, weight]);
+
+  const handleOnClick = useCallback(() => {
+    if (onClick !== undefined) {
+      onClick();
+    }
+  }, [onClick]);
 
   return (
-    <Tag className={className} style={styles}>{children}</Tag>
+    <Tag
+      onClick={handleOnClick}
+      className={className}
+      style={styles}>{children}</Tag>
   )
 }

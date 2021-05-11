@@ -31,7 +31,7 @@ export const JoinLecturerModal = ({
       close={handleClose}
       maxWidth='400px'
       width='90%'
-      height='225px'
+      height='250px'
     >
       <div className='joinLecturerModal'>
         <Text>강사 코드</Text>
@@ -42,6 +42,11 @@ export const JoinLecturerModal = ({
           className='joinLecturerModal-code'
           type='password'
         />
+
+        <Text
+          size='small'
+          cursor='pointer'
+        >새로운 강의만들기</Text>
 
         <div className='joinLecturerModal-buttonWrapper'>
           <Button
