@@ -1,0 +1,10 @@
+@import "styles/colors.scss";
+
+.lectureSideBar {
+  position: absolute;
+  height: calc(100vh - 70px);
+  background-color: white;
+  transition: left 0.1s;
+  width: 300px;
+  padding: 40px 0;
+}

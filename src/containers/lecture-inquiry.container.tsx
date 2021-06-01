@@ -11,6 +11,8 @@ import { useStores } from 'stores/use-stores';
 import { IInquiry } from 'types/inquiry.interface';
 import { PinnedInquiryModal } from 'components/inquiry/pinned-inquiry-modal';
 import { lectureStorage } from 'storage/lecture.storage';
+import { LectureSideBar } from 'components/lecturer/lecture-side-bar';
+import { lectureStore } from 'stores/lecture.store';
 
 export const LectureInquiryContainer = observer(() => {
   const refs = useRef<HTMLDivElement>(null);
@@ -65,6 +67,20 @@ export const LectureInquiryContainer = observer(() => {
   const handleFetchInquiries = useCallback((): Promise<void> => {
     return inquiryStore.fetch(handleExtractAdminCode());
   }, [handleExtractAdminCode, inquiryStore]);
+
+  const handleCloseLecture = useCallback(async () => {
+    if (inquiryStore.lecture === null) {
+      return;
+    }
+
+    try {
+      await lectureStore.close(inquiryStore.lecture);
+      adminCodeStorage.remove();
+      history.push('/');
+    } catch (err) {
+      alert('강의종료 중 오류가 발생했습니다');
+    }
+  }, [history, inquiryStore.lecture])
 
   const inquiryItems = inquiryStore.inquiries.map((inquiry, index) => {
     return (
@@ -126,6 +142,7 @@ export const LectureInquiryContainer = observer(() => {
 
   return (
     <>
+      <LectureSideBar handleCloseLecture={handleCloseLecture} />
       <PinnedInquiryModal inquiry={pinnedInquiry} handleUnPinInquiry={handleUnpinInquiry} />
       < MessageList messageItems={inquiryItems} refs={refs} />
     </>

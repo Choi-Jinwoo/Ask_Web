@@ -1,0 +1,27 @@
+@import "styles/colors.scss";
+
+.lectureSideBarItem {
+  user-select: none;
+  width: 100%;
+  overflow: hidden;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  color: $darkerGray;
+
+  transition: background-color 0.5s;
+
+  &:hover {
+    background-color: rgba($color: #000000, $alpha: 0.1);
+    cursor: pointer;
+  }
+
+  &-icon {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 1.25rem;
+  }
+}

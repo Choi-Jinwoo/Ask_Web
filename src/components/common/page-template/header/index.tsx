@@ -35,6 +35,6 @@ export const Header = observer(() => {
         size='big'
         weight='bold'
         className='header-title'>{title}</Text>
-    </header>
+    </header >
   )
 });
