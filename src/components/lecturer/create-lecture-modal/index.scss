@@ -1,0 +1,67 @@
+@import "styles/colors.scss";
+
+.createLectureModal {
+  display: flex;
+  flex-direction: column;
+
+  &-inputWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  &-title,
+  &-lecturer {
+    width: 100%;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    padding: 5px;
+    color: $darkerGray;
+    border: 1px solid $baseGray;
+    border-radius: 3px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &-info {
+    display: flex;
+    align-items: center;
+    background-color: rgba($color: $darkBlue, $alpha: 0.1);
+    border-radius: 3px;
+    padding: 8px;
+
+    &-textWrapper {
+      margin-left: 10px;
+    }
+  }
+
+  &-resultBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  &-codeWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid $baseGray;
+    border-radius: 3px;
+    width: 100%;
+    margin-top: 5px;
+    padding: 5px;
+  }
+
+  &-buttonWrapper {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}

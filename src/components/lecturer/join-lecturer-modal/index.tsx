@@ -11,6 +11,7 @@ type Props = {
   isOpen: boolean;
   handleClose: () => void;
   handleJoin: () => void;
+  handleClickCreateLecture: () => void;
 }
 
 export const JoinLecturerModal = ({
@@ -19,6 +20,7 @@ export const JoinLecturerModal = ({
   isOpen,
   handleClose,
   handleJoin,
+  handleClickCreateLecture,
 }: Props) => {
   const onJoinClick = useCallback((e) => {
     handleJoin();
@@ -31,7 +33,7 @@ export const JoinLecturerModal = ({
       close={handleClose}
       maxWidth='400px'
       width='90%'
-      height='250px'
+      height='260px'
     >
       <div className='joinLecturerModal'>
         <Text>강사 코드</Text>
@@ -46,6 +48,7 @@ export const JoinLecturerModal = ({
         <Text
           size='small'
           cursor='pointer'
+          onClick={handleClickCreateLecture}
         >새로운 강의만들기</Text>
 
         <div className='joinLecturerModal-buttonWrapper'>

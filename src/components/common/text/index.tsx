@@ -5,7 +5,7 @@ import { composeSize } from 'utils/ui';
 type ColorType = 'light' | 'dark';
 type SizeType = 'big' | 'regular' | 'small';
 type WeightType = 'bold' | 'bolder' | 'normal' | 'lighter';
-type CursorType = 'none' | 'pointer';
+type CursorType = 'default' | 'pointer';
 
 type Props = {
   tag?: keyof JSX.IntrinsicElements;
@@ -40,7 +40,7 @@ const getSize = (sizeType: SizeType | string): string => {
       return composeSize(1, 'rem');
 
     case 'small':
-      return composeSize(0.75, 'rem');
+      return composeSize(0.85, 'rem');
 
     default:
       return sizeType;
@@ -53,7 +53,7 @@ export const Text = ({
   size = 'regular',
   color = 'dark',
   weight = 'normal',
-  cursor = 'none',
+  cursor = 'default',
   onClick,
   children
 }: Props) => {

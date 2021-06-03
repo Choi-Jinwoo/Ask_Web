@@ -15,7 +15,7 @@ export class LectureRepository {
   }
 
   async closeLecture(adminCode: string, lecture: ILecture) {
-    const res = await baseAxios.post('/lecture/close', {
+    await baseAxios.post('/lecture/close', {
       lectureId: lecture.id,
       adminCode,
     });

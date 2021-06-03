@@ -13,6 +13,8 @@ import { JoinAuditorModal } from 'components/auditor/join-auditor-modal';
 import { tokenStorage } from 'storage/token.storage';
 import { LoginModal } from 'components/auth/login-modal';
 import { useStores } from 'stores/use-stores';
+import { ILecture } from 'types/lecture.interface';
+import { CreateLectureModal } from 'components/lecturer/create-lecture-modal';
 
 export const SelectServiceContainer = observer(() => {
   const { lectureStore } = useStores();
@@ -79,14 +81,12 @@ export const SelectServiceContainer = observer(() => {
 
   const handleJoinAuditorService = useCallback(() => {
     lectureStore.join(joinCode)
-      .then((lecture) => {
+      .then((lecture: ILecture) => {
         lectureStorage.set(lecture);
         InquirySocketSingleton.instance.connectSocket();
         history.push('auditor');
       })
-      .catch((err) => {
-        console.log(err);
-
+      .catch((err: any) => {
         switch (err.response.status) {
           case 410:
           case 401:
@@ -104,6 +104,10 @@ export const SelectServiceContainer = observer(() => {
       })
   }, [history, joinCode, lectureStore])
 
+  const handleClickCreateLecture = useCallback(() => {
+    setJoinLecturerModalOpen(false);
+  }, [])
+
   useEffect(() => {
     adminCodeStorage.remove();
     lectureStorage.remove();
@@ -112,9 +116,14 @@ export const SelectServiceContainer = observer(() => {
 
   return (
     <div>
+      <CreateLectureModal
+        isOpen={true}
+        handleClose={() => { }}
+      />
       <JoinLecturerModal
         adminCode={adminCode}
         onAdminCodeChange={onAdminCodeChange}
+        handleClickCreateLecture={handleClickCreateLecture}
         handleJoin={handleJoinLecturerService}
         isOpen={isJoinLecturerModalOpen}
         handleClose={handleCloseJoinLecturerModal} />
