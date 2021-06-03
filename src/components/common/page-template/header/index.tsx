@@ -2,8 +2,10 @@ import { Text } from 'components/common/text';
 import { observer } from 'mobx-react';
 import { useMemo } from 'react';
 import { useStores } from 'stores/use-stores';
+import { CgMediaLive } from 'react-icons/cg';
 
 import './index.scss';
+import { colors } from 'styles/colors';
 
 export const Header = observer(() => {
   const { inquiryStore } = useStores();
@@ -21,10 +23,12 @@ export const Header = observer(() => {
   return (
     <header className='header'>
       <div className='header-serviceIntro'>
+        <CgMediaLive className='header-serviceIntro-icon' color={colors.darkBlue} size='1.25rem' />
+
         <Text
           size='big'
           weight='bold'
-          className='header-serviceIntro-title'>ASK</Text>
+          className='header-serviceIntro-title'>LIVE TALK</Text>
 
         <Text
           size='small'
