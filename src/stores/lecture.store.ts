@@ -19,6 +19,12 @@ class LectureStore {
     const adminCode = adminCodeStorage.get() as string;
     await this.lectureRepository.closeLecture(adminCode, lecture);
   }
+
+  async create(title: string, lecturer: string): Promise<ILecture> {
+    const { lecture } = await this.lectureRepository.createLecture(title, lecturer);
+
+    return lecture;
+  }
 }
 
 export const lectureStore = new LectureStore(new LectureRepository());

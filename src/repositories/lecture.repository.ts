@@ -20,4 +20,13 @@ export class LectureRepository {
       adminCode,
     });
   }
+
+  async createLecture(title: string, lecturer: string) {
+    const res = await baseAxios.post('/lecture', {
+      title,
+      lecturer,
+    });
+
+    return res.data['data'];
+  }
 }

@@ -5,4 +5,6 @@ export interface ILecture {
   startAt: Date;
   endAt: Date;
   createdAt: Date;
+  adminCode: string;
+  joinCode: string;
 }

@@ -21,15 +21,30 @@ export const SelectServiceContainer = observer(() => {
 
   const history = useHistory();
 
+  // create modal state
+  const [createTitle, onCreateTitleChange, clearCreateTitle] = useInputText('');
+  const [createLecturer, onCreateLecturerChange, clearCreateLecturer] = useInputText('');
+  const [createdJoinCode, setCreatedJoinCode] = useState('');
+  const [createdAdminCode, setCreatedAdminCode] = useState('');
+
+  // join lecturer modal state
   const [adminCode, onAdminCodeChange, clearAdminCode] = useInputText('');
+
+  // join send inquiry modal state
   const [joinCode, onJoinCodeChange, clearJoinCode] = useInputText('');
+
+  // login modal state
   const [isLoginModalOpen, setLoginModalOpen] =
     useState<boolean>(false);
+
+  // modal open state
   const [isJoinLecturerModalOpen, setJoinLecturerModalOpen]
     = useState<boolean>(false);
   const [isJoinAuditorModalOpen, setJoinAuditorModalOpen]
     = useState<boolean>(false);
+  const [isCreateModalOpen, setCreateModalOpen] = useState<boolean>(false)
 
+  // close modal function
   const handleCloseJoinAuditorModal = useCallback(() => {
     setJoinAuditorModalOpen(false);
     clearJoinCode();
@@ -43,6 +58,35 @@ export const SelectServiceContainer = observer(() => {
   const handleCloseLoginModal = useCallback(() => {
     setLoginModalOpen(false);
   }, [])
+
+  const handleCloseCreateModal = useCallback(() => {
+    setCreateModalOpen(false);
+    clearCreateTitle();
+    clearCreateLecturer();
+    setCreatedJoinCode('');
+    setCreatedAdminCode('');
+  }, [clearCreateLecturer, clearCreateTitle])
+
+  const handleClickCreateLecture = useCallback(async () => {
+    if (createTitle.trim().length <= 0 || createLecturer.trim().length <= 0) {
+      alert('내용을 입력해주세요');
+      return;
+    }
+
+    try {
+      const lecture = await lectureStore.create(createTitle, createLecturer);
+      const { adminCode, joinCode } = lecture;
+      console.log(lecture);
+
+
+      console.log(adminCode, joinCode);
+
+      setCreatedJoinCode(joinCode);
+      setCreatedAdminCode(adminCode);
+    } catch (err) {
+      alert('다시 시도해주세요');
+    }
+  }, [createLecturer, createTitle, lectureStore])
 
   const handleClickLecturerService = useCallback(() => {
     setJoinLecturerModalOpen(true);
@@ -104,8 +148,9 @@ export const SelectServiceContainer = observer(() => {
       })
   }, [history, joinCode, lectureStore])
 
-  const handleClickCreateLecture = useCallback(() => {
+  const handleClickOpenCreateLecture = useCallback(() => {
     setJoinLecturerModalOpen(false);
+    setCreateModalOpen(true);
   }, [])
 
   useEffect(() => {
@@ -117,13 +162,20 @@ export const SelectServiceContainer = observer(() => {
   return (
     <div>
       <CreateLectureModal
-        isOpen={true}
-        handleClose={() => { }}
+        handleClickCreateLecture={handleClickCreateLecture}
+        isOpen={isCreateModalOpen}
+        handleClose={handleCloseCreateModal}
+        title={createTitle}
+        onTitleChange={onCreateTitleChange}
+        lecturer={createLecturer}
+        onLecturerChange={onCreateLecturerChange}
+        joinCode={createdJoinCode}
+        adminCode={createdAdminCode}
       />
       <JoinLecturerModal
         adminCode={adminCode}
         onAdminCodeChange={onAdminCodeChange}
-        handleClickCreateLecture={handleClickCreateLecture}
+        handleClickCreateLecture={handleClickOpenCreateLecture}
         handleJoin={handleJoinLecturerService}
         isOpen={isJoinLecturerModalOpen}
         handleClose={handleCloseJoinLecturerModal} />
