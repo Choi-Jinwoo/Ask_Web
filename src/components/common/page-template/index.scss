@@ -1,5 +1,10 @@
 .pageTemplate {
   &-children {
+    @media only screen and (max-width: 1024px) {
+      margin-top: 0;
+      height: 100vh;
+    }
+
     margin-top: 70px;
     height: calc(100vh - 70px);
     overflow-y: auto;

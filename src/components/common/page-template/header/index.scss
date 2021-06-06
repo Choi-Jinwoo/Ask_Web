@@ -1,6 +1,10 @@
 @import "styles/colors.scss";
 
 .header {
+  @media only screen and (max-width: 1024px) {
+    visibility: hidden;
+  }
+
   z-index: 1000;
   position: fixed;
   display: flex;
@@ -13,10 +17,6 @@
   top: 0;
 
   &-serviceIntro {
-    @media only screen and (max-width: 1024px) {
-      visibility: hidden;
-    }
-
     display: flex;
     align-items: center;
     position: absolute;
