@@ -76,10 +76,6 @@ export const SelectServiceContainer = observer(() => {
     try {
       const lecture = await lectureStore.create(createTitle, createLecturer);
       const { adminCode, joinCode } = lecture;
-      console.log(lecture);
-
-
-      console.log(adminCode, joinCode);
 
       setCreatedJoinCode(joinCode);
       setCreatedAdminCode(adminCode);
