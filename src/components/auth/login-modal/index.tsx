@@ -4,7 +4,7 @@ import { Button } from 'components/common/button';
 
 import './index.scss';
 import { useInputText } from 'hooks/input.hook';
-import { useCallback } from 'react';
+import { KeyboardEvent, useCallback } from 'react';
 import { useStores } from 'stores/use-stores';
 import { tokenStorage } from 'storage/token.storage';
 
@@ -40,6 +40,14 @@ export const LoginModal = ({
       })
   }, [authStore, clearId, clearPw, handleClose, handleSuccess, id, pw])
 
+  const handleKeyPressed = useCallback((e: KeyboardEvent) => {
+    console.log(e.key);
+
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  }, [handleLogin])
+
   return (
     <Modal
       title='도담도담 로그인'
@@ -67,6 +75,7 @@ export const LoginModal = ({
           <input
             value={pw}
             onChange={onPwChange}
+            onKeyPress={handleKeyPressed}
             className='loginModal-pw'
             placeholder='도담도담 비밀번호'
             type='password'

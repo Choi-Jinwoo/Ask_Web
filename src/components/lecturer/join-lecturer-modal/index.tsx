@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { KeyboardEvent, useCallback } from 'react';
 import { Modal } from 'components/common/modal';
 import { Text } from 'components/common/text';
 
@@ -26,6 +26,14 @@ export const JoinLecturerModal = ({
     handleJoin();
   }, [handleJoin])
 
+  const handleKeyPressed = useCallback((e: KeyboardEvent) => {
+    console.log(e.key);
+
+    if (e.key === 'Enter') {
+      handleJoin();
+    }
+  }, [handleJoin])
+
   return (
     <Modal
       title='강사 페이지 접속'
@@ -43,6 +51,7 @@ export const JoinLecturerModal = ({
           onChange={onAdminCodeChange}
           className='joinLecturerModal-code'
           type='password'
+          onKeyPress={handleKeyPressed}
         />
 
         <Text

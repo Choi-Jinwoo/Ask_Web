@@ -3,7 +3,7 @@ import { MouseEventHandler } from 'react';
 import { colors } from 'styles/colors';
 
 type Props = {
-  children: string,
+  children: JSX.Element | JSX.Element[] | string,
   color?: string;
   width?: string;
   height?: string;

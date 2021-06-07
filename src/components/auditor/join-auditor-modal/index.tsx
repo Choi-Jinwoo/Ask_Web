@@ -1,6 +1,7 @@
 import { Modal } from 'components/common/modal'
 import { Text } from 'components/common/text';
 import { Button } from 'components/common/button';
+import { KeyboardEvent, useCallback } from 'react';
 
 type Props = {
   joinCode: string;
@@ -17,6 +18,14 @@ export const JoinAuditorModal = ({
   handleClose,
   handleJoin,
 }: Props) => {
+  const handleKeyPressed = useCallback((e: KeyboardEvent) => {
+    console.log(e.key);
+
+    if (e.key === 'Enter') {
+      handleJoin();
+    }
+  }, [handleJoin])
+
   return (
     <Modal
       title='수강자 페이지 접속'
@@ -34,6 +43,7 @@ export const JoinAuditorModal = ({
           onChange={onJoinCodeChange}
           className='joinLecturerModal-code'
           type='password'
+          onKeyPress={handleKeyPressed}
         />
 
         <div className='joinLecturerModal-buttonWrapper'>
