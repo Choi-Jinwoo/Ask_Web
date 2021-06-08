@@ -38,7 +38,7 @@ export const PinnedInquiryModal = ({
   handleUnPinInquiry,
 }: Props) => {
   const [fontSize, setFontSize] = useState(1);
-  const [mode, setMode] = useState(ModalMode.DARK);
+  const [mode, setMode] = useState(ModalMode.LIGHT);
 
   const isOpen = inquiry !== null;
 
@@ -89,7 +89,7 @@ export const PinnedInquiryModal = ({
 
   useEffect(() => {
     handleInitFontSize();
-    setMode(ModalMode.DARK);
+    setMode(ModalMode.LIGHT);
   }, [handleInitFontSize])
 
   return (

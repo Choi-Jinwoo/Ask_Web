@@ -44,7 +44,7 @@ const userToProfile = (user: IUser | null): IUserProfile => {
 
   return {
     name: '익명',
-    detail: '-',
+    detail: '',
     profileImage: BasicProfile,
   }
 }
