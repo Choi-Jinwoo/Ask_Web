@@ -1,8 +1,9 @@
 import io from 'socket.io-client';
-import { SOCKET_ENDPOINT } from 'config/endpoint';
 import { InquiryEvents } from './inquiry/inquiry.event';
 import { ISocketResponse } from './base.response';
 import { tokenStorage } from 'storage/token.storage';
+
+const SOCKET_ENDPOINT = process.env.REACT_APP_SOCKET_ENDPOINT;
 
 export class InquirySocketSingleton {
   private static _instance: InquirySocketSingleton;
