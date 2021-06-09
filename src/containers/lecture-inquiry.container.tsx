@@ -2,7 +2,7 @@ import { InquiryItem } from 'components/inquiry/inquiry-item';
 import { MessageList } from 'components/inquiry/message-list';
 import { MessageItem } from 'components/inquiry/message-item';
 import { observer } from 'mobx-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 import { InquirySocketSingleton } from 'socket/inquiry.socket';
 import { inquiryEmitter } from 'socket/inquiry/inquiry.emitter';
@@ -13,6 +13,7 @@ import { PinnedInquiryModal } from 'components/inquiry/pinned-inquiry-modal';
 import { lectureStorage } from 'storage/lecture.storage';
 import { LectureSideBar } from 'components/lecturer/lecture-side-bar';
 import { lectureStore } from 'stores/lecture.store';
+import { JoinCodeModal } from 'components/lecturer/join-code-modal';
 
 export const LectureInquiryContainer = observer(() => {
   const refs = useRef<HTMLDivElement>(null);
@@ -21,6 +22,23 @@ export const LectureInquiryContainer = observer(() => {
   const history = useHistory();
 
   const [pinnedInquiry, setPinnedInquiry] = useState<IInquiry | null>(null);
+  const [isJoinCodeModalOpen, setJoinCodeModalOpen] = useState<boolean>(false);
+
+  const handleCloseJoinCodeModal = useCallback(() => {
+    setJoinCodeModalOpen(false);
+  }, [])
+
+  const joinCode: string = useMemo(() => {
+    if (inquiryStore.lecture === null) {
+      return '현재 번호를 확인할 수 없습니다';
+    }
+
+    return inquiryStore.lecture.joinCode;
+  }, [inquiryStore.lecture]);
+
+  const handleOpenJoinCodeModal = useCallback(() => {
+    setJoinCodeModalOpen(true);
+  }, [])
 
   const handleExtractAdminCode = useCallback((): string => {
     const adminCode = adminCodeStorage.get();
@@ -142,7 +160,8 @@ export const LectureInquiryContainer = observer(() => {
 
   return (
     <>
-      <LectureSideBar handleCloseLecture={handleCloseLecture} />
+      <JoinCodeModal isOpen={isJoinCodeModalOpen} handleClose={handleCloseJoinCodeModal} joinCode={joinCode} />
+      <LectureSideBar handleCloseLecture={handleCloseLecture} handleShowJoinCode={handleOpenJoinCodeModal} />
       <PinnedInquiryModal inquiry={pinnedInquiry} handleUnPinInquiry={handleUnpinInquiry} />
       < MessageList messageItems={inquiryItems} refs={refs} />
     </>
