@@ -23,7 +23,7 @@ export const Header = observer(() => {
   return (
     <header className='header'>
       <div className='header-serviceIntro'>
-        <CgMediaLive className='header-serviceIntro-icon' color={colors.darkBlue} size='1.25rem' />
+        <CgMediaLive className='header-serviceIntro-icon' color={colors.darkBlue} size='18px' />
 
         <Text
           size='big'

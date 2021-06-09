@@ -1,12 +1,12 @@
 import { Modal } from 'components/common/modal';
 import { Text } from 'components/common/text';
 import { Button } from 'components/common/button';
-import { RiFileCopyLine } from 'react-icons/ri';
+// https 를 지원하지 않아 copy 기능 제한
+// import { RiFileCopyLine } from 'react-icons/ri';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import './index.scss';
 import { colors } from 'styles/colors';
-import { useCallback } from 'react';
 
 type Props = {
   isOpen: boolean;
@@ -31,17 +31,17 @@ export const CreateLectureModal = ({
   adminCode,
   handleClickCreateLecture,
 }: Props) => {
-  const handleCopyText = useCallback((text: string) => {
-    navigator.clipboard.writeText(text);
-  }, []);
+  // const handleCopyText = useCallback((text: string) => {
+  //   navigator.clipboard.writeText(text);
+  // }, []);
 
-  const handleCopyJoinCode = useCallback(() => {
-    handleCopyText(joinCode);
-  }, [handleCopyText, joinCode]);
+  // const handleCopyJoinCode = useCallback(() => {
+  //   handleCopyText(joinCode);
+  // }, [handleCopyText, joinCode]);
 
-  const handleCopyAdminCode = useCallback(() => {
-    handleCopyText(adminCode);
-  }, [adminCode, handleCopyText]);
+  // const handleCopyAdminCode = useCallback(() => {
+  //   handleCopyText(adminCode);
+  // }, [adminCode, handleCopyText]);
 
   return (
     <Modal
@@ -93,14 +93,14 @@ export const CreateLectureModal = ({
           <Text size='small' weight='bold'>참여 코드</Text>
           <div className='createLectureModal-codeWrapper'>
             <Text size='small' weight='bold' color={colors.darkerGray}>{joinCode}</Text>
-            <RiFileCopyLine color={colors.darkerGray} cursor='pointer' onClick={handleCopyJoinCode} />
+            {/* <RiFileCopyLine color={colors.darkerGray} cursor='pointer' onClick={handleCopyJoinCode} /> */}
           </div>
         </div>
         <div className='createLectureModal-resultBox'>
           <Text size='small' weight='bold'>관리자 코드</Text>
           <div className='createLectureModal-codeWrapper'>
             <Text size='small' weight='bold' color={colors.darkerGray}>{adminCode}</Text>
-            <RiFileCopyLine color={colors.darkerGray} cursor='pointer' onClick={handleCopyAdminCode} />
+            {/* <RiFileCopyLine color={colors.darkerGray} cursor='pointer' onClick={handleCopyAdminCode} /> */}
           </div>
         </div>
 
