@@ -41,8 +41,6 @@ export const LoginModal = ({
   }, [authStore, clearId, clearPw, handleClose, handleSuccess, id, pw])
 
   const handleKeyPressed = useCallback((e: KeyboardEvent) => {
-    console.log(e.key);
-
     if (e.key === 'Enter') {
       handleLogin();
     }

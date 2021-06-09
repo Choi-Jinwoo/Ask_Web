@@ -27,8 +27,6 @@ export const JoinLecturerModal = ({
   }, [handleJoin])
 
   const handleKeyPressed = useCallback((e: KeyboardEvent) => {
-    console.log(e.key);
-
     if (e.key === 'Enter') {
       handleJoin();
     }
