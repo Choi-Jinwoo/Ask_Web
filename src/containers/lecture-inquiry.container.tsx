@@ -91,6 +91,10 @@ export const LectureInquiryContainer = observer(() => {
       return;
     }
 
+    if (!window.confirm('강의를 종료하시겠습니까?')) {
+      return;
+    }
+
     try {
       await lectureStore.close(inquiryStore.lecture);
       adminCodeStorage.remove();

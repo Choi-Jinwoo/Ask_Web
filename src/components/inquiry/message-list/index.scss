@@ -7,4 +7,10 @@
   width: 60%;
   height: 100%;
   overflow-y: auto;
+
+  @media only screen and (max-width: 1024px) {
+    margin-left: 150px;
+    padding-left: 10px;
+    width: calc(100% - 150px);
+  }
 }
